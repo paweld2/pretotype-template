@@ -1,0 +1,12 @@
+{
+    "name": "pretotype-html5"
+  , "description": "pretotype template"
+  , "version": "0.0.1"
+  , "author": "Paweł Cesar Sanjuan Szklarz"
+  , "devDependencies": {
+     "recess": "1.1.9",
+     "bower": "0.10.0",
+     "requirejs": "2.1.6",
+     "karma" : "0.9.4"
+  }
+}

@@ -12,3 +12,9 @@ logs
 results
 
 npm-debug.log
+.idea
+node_modules/
+*.iml
+tmp/
+app/scripts/vendor/
+dist/
