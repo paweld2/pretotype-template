@@ -1,16 +1,17 @@
 {
-    "name": "Pretotype template",
+    "name": "PMSOFT homepage",
     "version": "0.0.1",
     "dependencies": {
-        "requirejs": "2.1.6",
-        "requirejs-text": "2.0.6",
-        "jquery": "1.9.1",
-        "bootstrap": "v2.3.1",
-        "underscore-amd": "1.4.4",
-        "has": "51d90f307ce1051762cd708dbebd6e3f492a2c60",
-        "angular-1.1.x": "1.1.5"
+        "requirejs": "2.1.9",
+        "requirejs-text": "2.0.10",
+        "jquery": "1.10.2",
+        "bootstrap": "3.0.1",
+        "underscore-amd": "1.5.2",
+        "has": "c6d621477d9113adba9af1d8b98f162c399771a6",
+        "angular": "1.2.0-rc.3",
+        "angular-route": "1.2.0-rc.3"
     },
     "devDependencies": {
-        "less.js": "v1.4.0"
+        "less.js": "1.5.0"
     }
 }

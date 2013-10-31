@@ -1,7 +1,8 @@
 'use strict';
 require.config({
     paths: {
-        'angular': 'vendor/angular-1.1.x/angular',
+        'angular': 'vendor/angular/angular',
+        'angularRoute': 'vendor/angular-route/angular-route',
         'text': 'vendor/requirejs-text/text',
         'requireLib': 'vendor/requirejs/require',
         'jquery': 'vendor/jquery/jquery',
@@ -12,13 +13,16 @@ require.config({
     shim : {
         angular  :{
             exports : "angular"
+        },
+        "angularRoute": {
+            deps: ["angular"]
         }
     },
     urlArgs: "bust=" + (new Date()).getTime(),
     waitSeconds : 150
 });
 
-require(['AppInjector'], function (App) {
+require(['AppInjector','angular'], function (App) {
     App.initialize();
     return {};
 });

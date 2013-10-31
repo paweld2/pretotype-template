@@ -3,9 +3,9 @@ CHECK=\033[32m✔\033[39m
 HR=\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
 PRETOTYPE = ./app/styles/app.css
-PRETOTYPE_RESPONSIVE = ./app/styles/app-responsive.css
-PRETOTYPE_LESS = ./app/less/main.less
-PRETOTYPE_RESPONSIVE_LESS = ./app/less/main-responsive.less
+PRETOTYPE_THEME = ./app/styles/app-theme.css
+PRETOTYPE_LESS = ./app/less/bootstrap.less
+PRETOTYPE_THEME_LESS = ./app/less/them.less
 SHA := $(shell git rev-parse HEAD)
 
 build: styles
@@ -27,13 +27,13 @@ styles:
 	@echo "\n${HR}"
 	@echo "less->css"
 	@./node_modules/.bin/recess --compress ${PRETOTYPE_LESS} > ${PRETOTYPE}
-	@./node_modules/.bin/recess --compress ${PRETOTYPE_RESPONSIVE_LESS} > ${PRETOTYPE_RESPONSIVE}
+	@./node_modules/.bin/recess --compress ${PRETOTYPE_THEME_LESS} > ${PRETOTYPE_THEME}
 
 styles-dev:
 	@echo "\n${HR}"
 	@echo "less->css"
 	@./node_modules/.bin/recess --compile ${PRETOTYPE_LESS} > ${PRETOTYPE}
-	@./node_modules/.bin/recess --compile ${PRETOTYPE_RESPONSIVE_LESS} > ${PRETOTYPE_RESPONSIVE}
+	@./node_modules/.bin/recess --compile ${PRETOTYPE_THEME_LESS} > ${PRETOTYPE_THEME}
 
 clean:
 	@rm -r dist
