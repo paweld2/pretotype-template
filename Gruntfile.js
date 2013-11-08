@@ -201,7 +201,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [ 'clean', 'dist']);
 
 
-    grunt.registerTask('dev', [ 'dist','connect:devserver','watch']);
+    grunt.registerTask('dev', [ 'copy:fonts_dev','connect:devserver','watch']);
     grunt.registerTask('bin', [ 'dist','connect:binserver','watch']);
 
 

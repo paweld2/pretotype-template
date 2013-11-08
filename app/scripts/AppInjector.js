@@ -6,10 +6,9 @@ define([
     "Directives/directivesModule",
     "Filters/filtersModule",
     "Controllers/controllersModule",
-    "text!template/Main.html",
-    "text!template/Contact.html"
+    "text!template/Main.html"
 ],
-    function (logger, angular, angularRoute, ServicesModule, Directives, Filters, Controllers, mainTemplate, contactTemplate) {
+    function (logger, angular, angularRoute, ServicesModule, Directives, Filters, Controllers, mainTemplate) {
         var initialize = function () {
             var app = angular.module("myApp",
                 ['ngRoute', ServicesModule.name, Controllers.name, Filters.name, Directives.name],
@@ -18,10 +17,6 @@ define([
                         $logProvider.debugEnabled(true);
                         $routeProvider.when('/', {
                             template: mainTemplate,
-                            controller: 'MainCtrl'
-                        });
-                        $routeProvider.when('/contact.html', {
-                            template: contactTemplate,
                             controller: 'MainCtrl'
                         });
                         $routeProvider.otherwise({ redirectTo: '/'});
