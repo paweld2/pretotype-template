@@ -3,7 +3,7 @@
     require.config({
         paths: {
             'angular': 'vendor/angular/angular',
-            'angularRoute': 'vendor/angular-route/angular-route',
+            'angular-ui-router': 'vendor/angular-ui-router/release/angular-ui-router',
             'text': 'vendor/requirejs-text/text',
             'requireLib': 'vendor/requirejs/require',
             'jquery': 'vendor/jquery/jquery',
@@ -15,7 +15,7 @@
             angular: {
                 exports: "angular"
             },
-            "angularRoute": {
+            "angular-ui-router": {
                 deps: ["angular"]
             }
         },
