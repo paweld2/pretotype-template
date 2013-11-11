@@ -168,6 +168,28 @@ module.exports = function (grunt) {
             install: {
                 cleanTargetDir : true
             }
+        },
+        karma: {
+            unit: {
+                configFile: './test/karma-unit.conf.js',
+                autoWatch: false,
+                singleRun: true
+            },
+            midway: {
+                configFile: './test/karma-midway.conf.js',
+                autoWatch: false,
+                singleRun: true
+            },
+            unit_watch: {
+                configFile: './test/karma-unit.conf.js',
+                autoWatch: true,
+                singleRun: false
+            },
+            midway_watch: {
+                configFile: './test/karma-midway.conf.js',
+                autoWatch: true,
+                singleRun: false
+            }
         }
     });
 
@@ -183,12 +205,13 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-sed');
     grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-karma');
 
 
     // CSS distribution task.
     grunt.registerTask('dist-css', ['recess']);
     grunt.registerTask('dist-js', ['requirejs']);
-    grunt.registerTask('test', ['jshint']);
+    grunt.registerTask('test', ['jshint','karma:unit','karma:midway']);
 
     // content distribution task.
     grunt.registerTask('dist-content', ['copy']);
