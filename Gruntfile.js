@@ -20,39 +20,42 @@ module.exports = function (grunt) {
                 src: 'Gruntfile.js'
             },
             src: {
-                src: ['app/scripts/*.js']
+                src: ['app/scripts/*.js', 'app/scripts/**/*.js'],
+                ignore: ['app/scripts/vendor']
             },
             test: {
                 src: ['app/tests/unit/*.js']
             }
         },
 
-        recess: {
-            options: {
-                compile: true,
-                banner: '<%= banner %>'
-            },
+        less: {
             bootstrap_dev: {
-                src: ['app/less/bootstrap.less'],
-                dest: 'app/styles/app.css'
+                files: {
+                    'app/styles/app.css': 'app/less/bootstrap.less'
+                }
             },
             theme_dev: {
-                src: ['app/less/theme.less'],
-                dest: 'app/styles/app-theme.css'
+                files: {
+                    'app/styles/app-theme.css': 'app/less/theme.less'
+                }
             },
             bootstrap: {
                 options: {
+                    cleancss: true,
                     compress: true
                 },
-                src: ['app/less/bootstrap.less'],
-                dest: 'dist/styles/app.min.css'
+                files: {
+                    'dist/styles/app.min.css': 'app/less/bootstrap.less'
+                }
             },
             theme: {
                 options: {
+                    cleancss: true,
                     compress: true
                 },
-                src: ['app/less/theme.less'],
-                dest: 'dist/styles/app-theme.min.css'
+                files: {
+                    'dist/styles/app-theme.min.css': 'app/less/theme.less'
+                }
             }
         },
         clean: {
@@ -72,27 +75,19 @@ module.exports = function (grunt) {
                 src: ["app/scripts/vendor/bootstrap/fonts/*"],
                 dest: 'app/fonts/'
             },
-            html : {
+            html: {
                 src: ["app/appBin.html"],
                 dest: 'dist/index.html'
             }
         },
-
-        qunit: {
-            options: {
-                inject: 'js/tests/unit/phantom.js'
-            },
-            files: ['js/tests/*.html']
-        },
-
         watch: {
             src: {
                 files: '<%= jshint.src.src %>',
-                tasks: ['jshint:src', 'qunit']
+                tasks: ['jshint:src']
             },
             test: {
                 files: '<%= jshint.test.src %>',
-                tasks: ['jshint:test', 'qunit']
+                tasks: ['jshint:test']
             },
             recess: {
                 files: 'app/less/*.less',
@@ -103,9 +98,9 @@ module.exports = function (grunt) {
             compile: {
                 options: {
                     baseUrl: "app/scripts",
-                    name : "main",
+                    name: "main",
                     out: 'dist/app_bin.js',
-                    include : ["requireLib"],
+                    include: ["requireLib"],
                     paths: {
                         requireLib: 'vendor/requirejs/require'
                     },
@@ -114,12 +109,12 @@ module.exports = function (grunt) {
                     throwWhen: {
                         optimize: true
                     },
-                    has : {
-                        consoleDebug : false
+                    has: {
+                        consoleDebug: false
                     },
-                    shim : {
-                        angular  :{
-                            exports : "angular"
+                    shim: {
+                        angular: {
+                            exports: "angular"
                         }
                     },
                     uglify2: {
@@ -128,8 +123,8 @@ module.exports = function (grunt) {
                         },
                         compress: {
                             sequences: false,
-                            dead_code : true,
-                            unused : true,
+                            dead_code: true,
+                            unused: true,
                             global_defs: {
                                 DEBUG: false
                             }
@@ -144,7 +139,7 @@ module.exports = function (grunt) {
         },
         sed: {
             version: {
-                path : ['dist/index.html'],
+                path: ['dist/index.html'],
                 pattern: '{{ version_data }}',
                 replacement: '<%= pkg.version %>',
                 recursive: false
@@ -166,7 +161,7 @@ module.exports = function (grunt) {
         },
         bower: {
             install: {
-                cleanTargetDir : true
+                cleanTargetDir: true
             }
         },
         karma: {
@@ -175,18 +170,8 @@ module.exports = function (grunt) {
                 autoWatch: false,
                 singleRun: true
             },
-            midway: {
-                configFile: './test/karma-midway.conf.js',
-                autoWatch: false,
-                singleRun: true
-            },
             unit_watch: {
                 configFile: './test/karma-unit.conf.js',
-                autoWatch: true,
-                singleRun: false
-            },
-            midway_watch: {
-                configFile: './test/karma-midway.conf.js',
                 autoWatch: true,
                 singleRun: false
             }
@@ -198,20 +183,19 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-sed');
-    grunt.loadNpmTasks('grunt-recess');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-karma');
 
 
     // CSS distribution task.
-    grunt.registerTask('dist-css', ['recess']);
+    grunt.registerTask('dist-css', ['less']);
     grunt.registerTask('dist-js', ['requirejs']);
-    grunt.registerTask('test', ['jshint','karma:unit','karma:midway']);
+    grunt.registerTask('test', ['jshint', 'karma:unit', 'karma:midway']);
 
     // content distribution task.
     grunt.registerTask('dist-content', ['copy']);
@@ -224,9 +208,8 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [ 'clean', 'dist']);
 
 
-    grunt.registerTask('dev', [ 'copy:fonts_dev','connect:devserver','watch']);
-    grunt.registerTask('bin', [ 'dist','connect:binserver','watch']);
-
+    grunt.registerTask('dev', [ 'copy:fonts_dev', 'connect:devserver', 'less:theme_dev', 'less:bootstrap_dev', 'watch']);
+    grunt.registerTask('bin', [ 'dist', 'connect:binserver', 'watch']);
 
 
 };

@@ -10,15 +10,14 @@
     require.config({
         baseUrl: '/base/',
         paths: {
+            'eelnss': 'app/scripts/vendor/eelnss/eelnss',
             'angular': 'app/scripts/vendor/angular/angular',
             'angular-ui-router': 'app/scripts/vendor/angular-ui-router/release/angular-ui-router',
             'text': 'app/scripts/vendor/requirejs-text/text',
             'requireLib': 'app/scripts/vendor/requirejs/require',
-            'jquery': 'app/scripts/vendor/jquery/jquery',
-            'underscore': 'app/scripts/vendor/underscore-amd/underscore',
+            'underscore': 'app/scripts/vendor/underscore/underscore',
             'moment': 'app/scripts/vendor/moment/moment',
-            'has': 'app/scripts/vendor/has/has',
-            'chai': 'node_modules/chai/chai'
+            'has': 'app/scripts/vendor/has/has'
         },
         shim: {
             angular: {

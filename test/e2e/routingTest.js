@@ -10,6 +10,7 @@ describe('open application', function() {
     });
     it('should jump to from state1 and state2 using links on page', function() {
         var app = new ApplicationApi();
+
         app.get();
         app.goState1();
         app.checkState1();

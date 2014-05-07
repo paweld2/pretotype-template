@@ -11,16 +11,21 @@
 
 <body>
 <div ui-view></div>
-<a ui-sref="state1">State 1</a>
-<a ui-sref="state2">State 2</a>
+<pre>
+      $state = {{$state.current.name}}
+      $stateParams = {{$stateParams}}
+      $state full url = {{ $state.$current.url.source }}
+</pre>
 <script>
     var require = {
         config: {
             'appConfig': {
-                'version' : 'development',
-                'hasConfig' : {
-                    'consoleDebug' : true
-                }
+                'version': 'development',
+                'hasConfig': {
+                    'consoleDebug': true,
+                    'fakeBackend': true
+                },
+                'fakeBackendDelay': 500
             }
         }
     };

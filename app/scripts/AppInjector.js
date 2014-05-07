@@ -1,66 +1,31 @@
 define([
-    'jquery',
     'utils/Logger',
     'angular',
     'angular-ui-router',
-    "Services/servicesModule",
-    "Directives/directivesModule",
-    "Filters/filtersModule",
-    "Controllers/controllersModule",
-    "text!template/partials/state1.html",
-    "text!template/partials/state1.list.html",
-    "text!template/partials/state2.html",
-    "text!template/partials/state2.list.html",
+    "routing/mainAppRouting",
+    "backend/mainAppBackend",
+    "capabilities/controllersModule"
 ],
-    function ($,logger, angular, uiroute, ServicesModule, Directives, Filters, Controllers, pa_s1, pa_s1_list, pa_s2, pa_s2_list ) {
+    function (logger, angular, uiroute, Routing, Backend, CapabilityTest) {
         var initialize = function () {
-            var appInitializer = function() {
-                var app = angular.module("myApp",
-                    ['ui.router', ServicesModule.name, Controllers.name, Filters.name, Directives.name],
-                    ['$stateProvider', '$urlRouterProvider', '$locationProvider',
-                        function ($stateProvider, $urlRouterProvider, $locationProvider) {
-                            //
-                            // For any unmatched url, redirect to /state1
-                            $urlRouterProvider.otherwise("/state1");
-                            //
-                            // Now set up the states
-                            $stateProvider
-                                .state('state1', {
-                                    url: "/state1",
-                                    template: pa_s1
-                                })
-                                .state('state1.list', {
-                                    url: "/list",
-                                    template: pa_s1_list,
-                                    controller: ['$scope',function ($scope) {
-                                        $scope.items = ["A", "List", "Of", "Items"];
-                                    }]
-                                })
-                                .state('state2', {
-                                    url: "/state2",
-                                    template: pa_s2
-                                })
-                                .state('state2.list', {
-                                    url: "/list",
-                                    template: pa_s2_list,
-                                    controller: ['$scope',function ($scope) {
-                                        $scope.things = ["A", "Set", "Of", "Things"];
-                                    }]
-                                });
-
-                            $locationProvider.html5Mode(false);
-
-                        }]);
-                return app;
-               };
-
-
             angular.element(document).ready(function () {
-                var app = appInitializer();
+                var appName = "pretotype";
+                var app = angular.module(appName, ['ui.router', CapabilityTest.name, Routing.name, Backend.name]);
+                app.config([ '$locationProvider',
+                    function ($locationProvider) {
+                        $locationProvider.html5Mode(false);
+                    }]);
                 app.run(function () {
-                    console.log('injector run');
+                    logger.log('injector run');
                 });
-                angular.bootstrap(document, ['myApp']);
+
+                app.run(['$rootScope', '$state', '$stateParams', '$http',
+                    function ($rootScope, $state, $stateParams, $http) {
+                        $rootScope.$state = $state;
+                        $rootScope.$stateParams = $stateParams;
+                        $http.defaults.withCredentials = true;
+                    }]);
+                angular.bootstrap(document, [appName]);
             });
         };
         return {

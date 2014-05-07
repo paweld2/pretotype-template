@@ -1,3 +1,4 @@
+
 const appRootPath = 'http://localhost:8001/';
 var ApplicationApi = function() {
     this.state1ListLink = element(by.css('[ui-sref="state1.list"]'));
