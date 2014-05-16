@@ -8,20 +8,24 @@
         }
     }
     require.config({
-        baseUrl: '/base/',
+        baseUrl: '/base/app/scripts/',
         paths: {
-            'eelnss': 'app/scripts/vendor/eelnss/eelnss',
-            'angular': 'app/scripts/vendor/angular/angular',
-            'angular-ui-router': 'app/scripts/vendor/angular-ui-router/release/angular-ui-router',
-            'text': 'app/scripts/vendor/requirejs-text/text',
-            'requireLib': 'app/scripts/vendor/requirejs/require',
-            'underscore': 'app/scripts/vendor/underscore/underscore',
-            'moment': 'app/scripts/vendor/moment/moment',
-            'has': 'app/scripts/vendor/has/has'
+            'eelnss': 'vendor/eelnss/eelnss',
+            'angular': 'vendor/angular/angular',
+            'angular-mocks': 'vendor/angular-mocks/angular-mocks',
+            'angular-ui-router': 'vendor/angular-ui-router/release/angular-ui-router',
+            'text': 'vendor/requirejs-text/text',
+            'requireLib': 'vendor/requirejs/require',
+            'underscore': 'vendor/underscore/underscore',
+            'moment': 'vendor/moment/moment',
+            'has': 'vendor/has/has'
         },
         shim: {
             angular: {
                 exports: "angular"
+            },
+            "angular-mocks": {
+                deps: ["angular"]
             },
             "angular-ui-router": {
                 deps: ["angular"]

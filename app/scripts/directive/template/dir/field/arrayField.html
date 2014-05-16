@@ -1,0 +1,17 @@
+<div class="form-group" ng-class="{'has-error' : $field.$invalid && ( $field.$dirty || $form.attempt )}">
+    <label class="col-sm-2 control-label">{{label}}</label>
+    <div class="col-sm-10">
+        <input class="form-control" type="text" ng-keypress="onEnterHandler($event)"/>
+        <button type="button" ng-click="add()" class="btn btn-mini">dodaj</button>
+        <span class="help-block">{{help}}</span>
+        <p ng-repeat="(key, error) in $field.$error" ng-show="error && ( $field.$dirty || $form.attempt )" class="help-block">{{$validationMessages[key]}}</p>
+
+        <div ng-repeat="a in arrayToEdit" class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="remove(a)">Usuń</button>
+                        <button class="btn btn-default" type="button" ng-click="edit(a)">Edytuj</button>
+                    </span>
+            <input type="text" class="form-control" ng-model="a" disabled>
+        </div>
+    </div>
+</div>

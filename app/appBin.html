@@ -9,10 +9,9 @@
     <link rel="stylesheet" href="styles/app-theme.min.css?{{ version_data }}" type="text/css">
 </head>
 
-<body>
+<body ng-class="$state.current.data.pageStyle" ng-controller="AuthorizationCtrl" ng-cloak>
+<div ni-cookie-eu></div>
 <div ui-view></div>
-<a ui-sref="state1">State 1</a>
-<a ui-sref="state2">State 2</a>
 <script>
     var require = {
         config: {

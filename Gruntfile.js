@@ -69,6 +69,12 @@ module.exports = function (grunt) {
                 src: ["app/scripts/vendor/bootstrap/fonts/*"],
                 dest: 'dist/fonts/'
             },
+            assets: {
+                expand: true,
+                flatten: true,
+                src: ["app/assets/*"],
+                dest: 'dist/assets/'
+            },
             fonts_dev: {
                 expand: true,
                 flatten: true,
@@ -89,9 +95,22 @@ module.exports = function (grunt) {
                 files: '<%= jshint.test.src %>',
                 tasks: ['jshint:test']
             },
-            recess: {
-                files: 'app/less/*.less',
-                tasks: ['recess']
+            less: {
+                files: ['app/less/*.less'],
+                tasks: ['less:bootstrap_dev', 'less:theme_dev'],
+                options: {
+                    livereload: true
+                }
+            },
+            templates: {
+                files: ['app/scripts/**/*.html'],
+                options: {
+                    livereload: true
+                }
+            },
+            karma: {
+                files: ['<%= jshint.src.src %>', '<%= jshint.test.src %>', 'app/scripts/**/*.html', 'test/**/*.js'],
+                tasks: ['karma:unit_watch:run']
             }
         },
         requirejs: {
@@ -110,8 +129,10 @@ module.exports = function (grunt) {
                         optimize: true
                     },
                     has: {
-                        consoleDebug: false
+                        consoleDebug: true,
+                        fakeBackend: true
                     },
+                    fakeBackendDelay: 6000,
                     shim: {
                         angular: {
                             exports: "angular"
@@ -132,8 +153,9 @@ module.exports = function (grunt) {
                         warnings: true,
                         mangle: true
                     },
-                    generateSourceMaps: true,
-                    preserveLicenseComments: false
+                    optimizeAllPluginResources: false,
+                    generateSourceMaps: false,
+                    preserveLicenseComments: true
                 }
             }
         },
@@ -146,10 +168,18 @@ module.exports = function (grunt) {
             }
         },
         connect: {
+            debugserver: {
+                options: {
+                    port: 8001,
+                    base: 'app',
+                    keepalive:true
+                }
+            },
             devserver: {
                 options: {
                     port: 8001,
-                    base: 'app'
+                    base: 'app',
+                    livereload: true
                 }
             },
             binserver: {
@@ -172,8 +202,7 @@ module.exports = function (grunt) {
             },
             unit_watch: {
                 configFile: './test/karma-unit.conf.js',
-                autoWatch: true,
-                singleRun: false
+                background: true
             }
         }
     });
@@ -195,7 +224,7 @@ module.exports = function (grunt) {
     // CSS distribution task.
     grunt.registerTask('dist-css', ['less']);
     grunt.registerTask('dist-js', ['requirejs']);
-    grunt.registerTask('test', ['jshint', 'karma:unit', 'karma:midway']);
+    grunt.registerTask('test', ['jshint', 'karma:unit']);
 
     // content distribution task.
     grunt.registerTask('dist-content', ['copy']);
@@ -206,9 +235,10 @@ module.exports = function (grunt) {
 
     // Default task.
     grunt.registerTask('default', [ 'clean', 'dist']);
+    grunt.registerTask('dev_watch_mode', [ 'karma:unit_watch','watch']);
 
 
-    grunt.registerTask('dev', [ 'copy:fonts_dev', 'connect:devserver', 'less:theme_dev', 'less:bootstrap_dev', 'watch']);
+    grunt.registerTask('dev', [ 'copy:fonts_dev', 'connect:devserver', 'less:theme_dev', 'less:bootstrap_dev', 'dev_watch_mode']);
     grunt.registerTask('bin', [ 'dist', 'connect:binserver', 'watch']);
 
 

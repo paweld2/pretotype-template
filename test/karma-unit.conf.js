@@ -6,7 +6,7 @@ module.exports = function (config) {
 
         frameworks: ['jasmine','requirejs'],
 
-        reporters: ['progress'],
+        reporters: ['progress','junit'],
 
         port: 9876,
         runnerPort: 9100,
@@ -23,7 +23,8 @@ module.exports = function (config) {
         // - PhantomJS
         // - IE (only Windows)
         // CLI --browsers Chrome,Firefox,Safari
-        browsers: ['Chrome','Firefox'],
+//        browsers: ['Chrome','Firefox'],
+        browsers: ['Chrome'],
         captureTimeout: 10000,
         singleRun: false,
         reportSlowerThan: 500,
@@ -32,12 +33,18 @@ module.exports = function (config) {
             'karma-jasmine',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
-            'karma-requirejs'
+            'karma-requirejs',
+            'karma-junit-reporter'
         ],
         files: [
             {pattern: 'app/scripts/**/*.js', included: false},
+            {pattern: 'app/scripts/**/*.html', included: false},
             {pattern: 'test/unit/**/*.spec.js', included: false},
             'test/unit/unit-main.js'
-        ]
+        ],
+        junitReporter : {
+            outputFile: 'test_out/unit.xml',
+            suite: 'unit'
+        }
     });
 };

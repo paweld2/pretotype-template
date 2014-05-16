@@ -1,15 +1,35 @@
-define(['underscore', 'appConfig'], function (_, config) {
+define(['underscore', 'appConfig', 'angular-resource'], function (_, config, resource) {
         var serverBaseAddress = config.serverBase || "";
-        var createBackendUrl = function (path) {
+
+        function createBackendUrl(path) {
             return serverBaseAddress + path;
-        };
-        var createBackendFromSpec = function ($resource, spec) {
+        }
+
+        function buildBackendResources($resource, spec) {
             return _.chain(spec.methods).pairs().map(function (par) {
                 return [par[0], $resource(createBackendUrl(spec.base + par[1]))];
             }).object().value();
-        };
+        }
+
+
+        function buildResourceModulesFromContract(apiContract) {
+            var moduleName = apiContract.id + 'BackendModule';
+            var module = angular.module(moduleName, ['ngResource']);
+            var serviceName = apiContract.id + 'Service';
+
+            module.factory(serviceName, ['$resource', function ($resource) {
+                return buildBackendResources($resource, apiContract);
+            }]);
+            return {
+                m: module,
+                service: serviceName,
+                specification: apiContract,
+                name: moduleName
+            };
+        }
+
         return {
-            buildBackend: createBackendFromSpec,
+            buildResourceModulesFromContract: buildResourceModulesFromContract,
             createBackendUrl: createBackendUrl
         };
     }

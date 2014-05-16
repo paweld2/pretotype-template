@@ -1,20 +1,21 @@
 define([
-    'utils/Logger',
-    'angular',
-    'angular-ui-router',
-    "routing/mainAppRouting",
-    "backend/mainAppBackend",
-    "capabilities/controllersModule"
-],
-    function (logger, angular, uiroute, Routing, Backend, CapabilityTest) {
+        'utils/Logger',
+        'angular',
+        'mainAppRouting',
+        'directive/appDirectives'
+    ],
+    function (logger, angular, routing, appDirectives) {
         var initialize = function () {
             angular.element(document).ready(function () {
                 var appName = "pretotype";
-                var app = angular.module(appName, ['ui.router', CapabilityTest.name, Routing.name, Backend.name]);
-                app.config([ '$locationProvider',
-                    function ($locationProvider) {
-                        $locationProvider.html5Mode(false);
-                    }]);
+                var app = angular.module(appName,
+                    [ routing.name, appDirectives.name]
+                );
+
+                app.config([ '$locationProvider', function ($locationProvider) {
+                    $locationProvider.html5Mode(false);
+                }]);
+
                 app.run(function () {
                     logger.log('injector run');
                 });
@@ -24,7 +25,9 @@ define([
                         $rootScope.$state = $state;
                         $rootScope.$stateParams = $stateParams;
                         $http.defaults.withCredentials = true;
+                        logger.log('App injector run.');
                     }]);
+
                 angular.bootstrap(document, [appName]);
             });
         };

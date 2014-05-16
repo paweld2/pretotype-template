@@ -16,6 +16,7 @@ npm-debug.log
 node_modules/
 *.iml
 tmp/
+test_out/
 app/scripts/vendor/
 dist/
 selenium/
