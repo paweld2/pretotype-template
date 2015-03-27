@@ -14,9 +14,11 @@ results
 npm-debug.log
 .idea
 node_modules/
+bower_components/
 *.iml
 tmp/
 test_out/
-app/scripts/vendor/
+src/main/app/scripts/vendor/
 dist/
 selenium/
+bower_dependencies/

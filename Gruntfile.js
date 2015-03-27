@@ -20,23 +20,22 @@ module.exports = function (grunt) {
                 src: 'Gruntfile.js'
             },
             src: {
-                src: ['app/scripts/*.js', 'app/scripts/**/*.js'],
-                ignore: ['app/scripts/vendor']
+                src: ['src/main/app/scripts/*.js', 'src/main/app/scripts/**/*.js']
             },
             test: {
-                src: ['app/tests/unit/*.js']
+                src: ['src/test/unit/*.js','src/test/unit/**/*.js']
             }
         },
 
         less: {
             bootstrap_dev: {
                 files: {
-                    'app/styles/app.css': 'app/less/bootstrap.less'
+                    'src/main/app/styles/app.css': 'src/main/less/bootstrap.less'
                 }
             },
             theme_dev: {
                 files: {
-                    'app/styles/app-theme.css': 'app/less/theme.less'
+                    'src/main/app/styles/app-theme.css': 'src/main/less/theme.less'
                 }
             },
             bootstrap: {
@@ -45,7 +44,7 @@ module.exports = function (grunt) {
                     compress: true
                 },
                 files: {
-                    'dist/styles/app.min.css': 'app/less/bootstrap.less'
+                    'dist/styles/app.min.css': 'src/main/less/bootstrap.less'
                 }
             },
             theme: {
@@ -54,7 +53,7 @@ module.exports = function (grunt) {
                     compress: true
                 },
                 files: {
-                    'dist/styles/app-theme.min.css': 'app/less/theme.less'
+                    'dist/styles/app-theme.min.css': 'src/main/less/theme.less'
                 }
             }
         },
@@ -121,9 +120,9 @@ module.exports = function (grunt) {
                     out: 'dist/app_bin.js',
                     include: ["requireLib"],
                     paths: {
-                        requireLib: 'vendor/requirejs/require'
+                        requireLib: 'bower_dependencies/vendor/requirejs/require'
                     },
-                    mainConfigFile: 'app/scripts/main.js',
+                    mainConfigFile: 'src/main/app/scripts/main.js',
                     optimize: "uglify2",
                     throwWhen: {
                         optimize: true
@@ -171,14 +170,17 @@ module.exports = function (grunt) {
             debugserver: {
                 options: {
                     port: 8001,
-                    base: 'app',
+                    base: ['bower_dependencies','src/main/app'],
+                    directory: 'src/main/app',
+                    debug:true,
                     keepalive:true
                 }
             },
             devserver: {
                 options: {
                     port: 8001,
-                    base: 'app',
+                    base: ['bower_dependencies','src/main/app'],
+                    directory: 'src/main/app',
                     livereload: true
                 }
             },
@@ -196,12 +198,13 @@ module.exports = function (grunt) {
         },
         karma: {
             unit: {
-                configFile: './test/karma-unit.conf.js',
+                configFile: 'src/test/karma-unit.conf.js',
                 autoWatch: false,
-                singleRun: true
+                singleRun: true,
+                logLevel: 'INFO'
             },
             unit_watch: {
-                configFile: './test/karma-unit.conf.js',
+                configFile: 'src/test/karma-unit.conf.js',
                 background: true
             }
         }
@@ -219,7 +222,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-karma');
-
+    grunt.loadNpmTasks('grunt-notify');
 
     // CSS distribution task.
     grunt.registerTask('dist-css', ['less']);

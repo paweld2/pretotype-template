@@ -2,7 +2,7 @@ module.exports = function (config) {
 
     config.set({
         // base path, that will be used to resolve files and exclude
-        basePath: '..',
+        basePath: '../../',
 
         frameworks: ['jasmine','requirejs'],
 
@@ -24,7 +24,8 @@ module.exports = function (config) {
         // - IE (only Windows)
         // CLI --browsers Chrome,Firefox,Safari
 //        browsers: ['Chrome','Firefox'],
-        browsers: ['Chrome','PhantomJS'],
+//        browsers: ['Chrome','PhantomJS'],
+        browsers: ['PhantomJS'],
         captureTimeout: 10000,
         singleRun: false,
         reportSlowerThan: 500,
@@ -38,10 +39,11 @@ module.exports = function (config) {
             'karma-junit-reporter'
         ],
         files: [
-            {pattern: 'app/scripts/**/*.js', included: false},
-            {pattern: 'app/scripts/**/*.html', included: false},
-            {pattern: 'test/unit/**/*.spec.js', included: false},
-            'test/unit/unit-main.js'
+            {pattern: 'bower_dependencies/vendor/**/*.js', included: false},
+            {pattern: 'src/main/app/scripts/**/*.js', included: false},
+            {pattern: 'src/main/app/scripts/**/*.html', included: false},
+            {pattern: 'src/test/unit/**/*.spec.js', included: false},
+            'src/test/unit/unit-main.js'
         ],
         junitReporter : {
             outputFile: 'test_out/unit.xml',

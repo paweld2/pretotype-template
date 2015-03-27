@@ -18,7 +18,8 @@
         "ng-file-upload": "3.2.4",
         "angular-promise-tracker": "2.1.0",
         "angular-translate": "2.6.1",
-        "eelnss": "0.0.3"
+        "eelnss": "0.0.3",
+	"squire": "0.2.0"
     },
     "devDependencies": {
         "less.js": "1.7.0",
