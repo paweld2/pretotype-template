@@ -24,13 +24,14 @@ module.exports = function (config) {
         // - IE (only Windows)
         // CLI --browsers Chrome,Firefox,Safari
 //        browsers: ['Chrome','Firefox'],
-        browsers: ['Chrome'],
+        browsers: ['Chrome','PhantomJS'],
         captureTimeout: 10000,
         singleRun: false,
         reportSlowerThan: 500,
 
         plugins: [
             'karma-jasmine',
+            'karma-phantomjs-launcher',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-requirejs',
