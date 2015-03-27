@@ -3,19 +3,15 @@
 define(
     ['angular', 'underscore',
         'utils/Logger',
-        'capabilities/auth/securityAccess',
-        'backend/authorizationContract',
-        'backend/mock/authorizationSpecification',
-        'mixin/promiseTrackerMixin',
-        'utils/MockInfrastructure'
+        './securityAccess',
+        './authorizationContract',
+        'mixin/promiseTrackerMixin'
     ],
-    function (angular, _, logger, securityAccess, contract, specification, promiseTrackerMixin, mockInfrastructure) {
+    function (angular, _, logger, securityAccess, contract, promiseTrackerMixin) {
         'use strict';
 
-        mockInfrastructure.registerSpecification(contract, specification);
-
         var moduleName = 'authorizationCapabilityModule';
-        var module = angular.module(moduleName, [contract.name, promiseTrackerMixin.name, mockInfrastructure.name]);
+        var module = angular.module(moduleName, [contract.name, promiseTrackerMixin.name]);
         var authorizationServiceName = 'authorizationService';
         var authRootControllerName = 'AuthorizationCtrl';
         var loginControllerName = 'LoginCtrl';
@@ -100,7 +96,6 @@ define(
                 $scope.data = {};
                 $scope.submit = function () {
                     $scope.error = false;
-//                    debugger;
                     $scope.control.calling.addP(authS.authenticate($scope.data, function () {
                         $state.go('root.app');
                     }, function () {

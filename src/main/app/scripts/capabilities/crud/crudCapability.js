@@ -3,18 +3,14 @@
 define(
     ['angular', 'underscore',
         'utils/Logger',
-        'backend/abstractCrudContract',
-        'backend/crud/crudSpecification',
-        'mixin/promiseTrackerMixin',
-        'utils/MockInfrastructure'
+        './abstractCrudContract',
+        'mixin/promiseTrackerMixin'
     ],
-    function (angular, _, logger, contract, specification, promiseTrackerMixin, mockInfrastructure) {
+    function (angular, _, logger, contract, promiseTrackerMixin) {
         'use strict';
 
-        mockInfrastructure.registerSpecification(contract, specification);
-
         var moduleName = 'crudCapabilityModule';
-        var module = angular.module(moduleName, [contract.name, promiseTrackerMixin.name, mockInfrastructure.name]);
+        var module = angular.module(moduleName, [contract.name, promiseTrackerMixin.name]);
 
         var crudModelServiceName = "crudModelService";
 
