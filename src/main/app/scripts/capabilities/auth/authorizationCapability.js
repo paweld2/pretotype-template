@@ -5,20 +5,24 @@ define(
         'utils/Logger',
         './securityAccess',
         './authorizationContract',
-        'mixin/promiseTrackerMixin'
+        'mixin/promiseTrackerMixin',
+        'utils/BackendSpecification'
     ],
-    function (angular, _, logger, securityAccess, contract, promiseTrackerMixin) {
+    function(angular, _, logger, securityAccess, contract, promiseTrackerMixin, backendSpecBuilder) {
         'use strict';
 
+        var contractBackend = backendSpecBuilder.buildResourceModulesFromContract(contract);
+
+
         var moduleName = 'authorizationCapabilityModule';
-        var module = angular.module(moduleName, [contract.name, promiseTrackerMixin.name]);
+        var module = angular.module(moduleName, [contractBackend.name, promiseTrackerMixin.name]);
         var authorizationServiceName = 'authorizationService';
         var authRootControllerName = 'AuthorizationCtrl';
         var loginControllerName = 'LoginCtrl';
 
         module.config(['$httpProvider',
-            function ($httpProvider) {
-                var interceptor = ['$location', '$q', '$injector', function ($location, $q, $injector) {
+            function($httpProvider) {
+                var interceptor = ['$location', '$q', '$injector', function($location, $q, $injector) {
                     function success(response) {
                         return response;
                     }
@@ -28,27 +32,27 @@ define(
                             logger.log("401 response, closing session");
                             $injector.get(authorizationServiceName).closeSession();
                             return $q.reject(response);
-                        }
-                        else {
+                        } else {
                             return $q.reject(response);
                         }
                     }
 
-                    return function (promise) {
+                    return function(promise) {
                         return promise.then(success, error);
                     };
                 }];
                 $httpProvider.interceptors.push(interceptor);
-            }]);
-        module.run([authorizationServiceName, function (authService) {
+            }
+        ]);
+        module.run([authorizationServiceName, function(authService) {
             authService.validateSession();
         }]);
-        module.factory(authorizationServiceName, [contract.service , function (authBackend) {
+        module.factory(authorizationServiceName, [contractBackend.service, function(authBackend) {
             var authService = {
-                authenticate: function (user, successFunction, errorFunction) {
+                authenticate: function(user, successFunction, errorFunction) {
                     var l = new authBackend.login();
                     _.extend(l, user);
-                    return l.$save(function (data) {
+                    return l.$save(function(data) {
                         authService.status.currentUser = data;
                         authService.status.role = securityAccess.buildUserRole(data.authorization);
                         if (angular.isFunction(successFunction)) {
@@ -56,7 +60,7 @@ define(
                         }
                     }, errorFunction);
                 },
-                logout: function (successLogoutFunction) {
+                logout: function(successLogoutFunction) {
                     authService.status.currentUser = undefined;
                     authService.status.role = securityAccess.buildUserRole({});
                     var logout = new authBackend.logout();
@@ -65,8 +69,8 @@ define(
                     }
                     return logout.$save();
                 },
-                validateSession: function (successFunction) {
-                    return authBackend.userInfo.get(function (data) {
+                validateSession: function(successFunction) {
+                    return authBackend.userInfo.get(function(data) {
                         authService.status.initializing = false;
                         authService.status.currentUser = data;
                         authService.status.role = securityAccess.buildUserRole(data.authorization);
@@ -90,26 +94,26 @@ define(
             return authService;
         }]);
 
-        module.controller(loginControllerName,
-            ['$scope', '$state', authorizationServiceName, promiseTrackerMixin.asyncTrackingScope, function ($scope, $state, authS, asyncTrackingScope) {
-                asyncTrackingScope.asyncScope($scope);
-                $scope.data = {};
-                $scope.submit = function () {
-                    $scope.error = false;
-                    $scope.control.calling.addP(authS.authenticate($scope.data, function () {
-                        $state.go('root.app');
-                    }, function () {
-                        $scope.error = true;
-                    }));
-                };
-            }]);
+        module.controller(loginControllerName, ['$scope', '$state', authorizationServiceName, promiseTrackerMixin.asyncTrackingScope, function($scope, $state, authS, asyncTrackingScope) {
+            asyncTrackingScope.asyncScope($scope);
+            $scope.data = {};
+            $scope.submit = function() {
+                $scope.error = false;
+                $scope.control.calling.addP(authS.authenticate($scope.data, function() {
+                    $state.go('root.app');
+                }, function() {
+                    $scope.error = true;
+                }));
+            };
+        }]);
         module.controller(authRootControllerName, ['$rootScope', '$scope', '$state', authorizationServiceName,
-            function ($rootScope, $scope, $state, authS) {
-                $scope.logout = function () {
-                    return authS.logout(function () {
+            function($rootScope, $scope, $state, authS) {
+                $scope.logout = function() {
+                    return authS.logout(function() {
                         $state.go("root.app");
                     });
                 };
+
                 function checkRoleAndState(state, role) {
                     if (!angular.isDefined(state.data) || !angular.isDefined(state.data.access)) {
                         return true;
@@ -117,9 +121,9 @@ define(
                     return state.data.access & role;
                 }
 
-                $scope.$watch(function () {
+                $scope.$watch(function() {
                     return authS.status;
-                }, function (status) {
+                }, function(status) {
                     $scope.auth = {
                         initializing: status.initializing,
                         isLogged: angular.isDefined(status.currentUser),
@@ -138,7 +142,7 @@ define(
                     }
                 }, true);
                 $rootScope.$on('$stateChangeStart',
-                    function (event, toState, toParams, fromState, fromParams) {
+                    function(event, toState, toParams, fromState, fromParams) {
                         if (angular.isDefined(authS.status.role)) {
                             var allowed = checkRoleAndState(toState, authS.status.role);
                             if (!allowed) {
@@ -147,7 +151,8 @@ define(
                             }
                         }
                     });
-            }]);
+            }
+        ]);
 
         return {
             m: module,

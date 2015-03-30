@@ -1,8 +1,5 @@
-define([
-        'angular',
-        'utils/BackendSpecification'
-    ],
-    function (angular, backendSpecBuilder) {
+define([],
+    function() {
         var modelApiContract = {
             id: 'authApi',
             base: '/backend/auth/',
@@ -13,6 +10,5 @@ define([
             }
         };
 
-
-        return backendSpecBuilder.buildResourceModulesFromContract(modelApiContract);
+        return modelApiContract;
     });

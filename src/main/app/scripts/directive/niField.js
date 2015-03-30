@@ -4,26 +4,26 @@ define([
         "text!directive/template/dir/field/selectField.html",
         "text!directive/template/dir/field/textareaField.html"
     ],
-    function (angular, input_template, select_template, textarea_template) {
+    function(angular, input_template, select_template, textarea_template) {
         'use strict';
         var moduleName = 'niFieldDirectiveModule';
         var module = angular.module(moduleName, []);
         //original implementation for Pete Bacon Darwin http://plnkr.co/edit/3zMsNnpNfOFwExSqLj2I?p=preview
-        module.directive('niField', ['$compile', '$interpolate', function ($compile, $interpolate) {
+        module.directive('niField', ['$compile', '$interpolate', function($compile, $interpolate) {
 
-            var findInputElement = function (element) {
+            var findInputElement = function(element) {
                 return angular.element(element.find('input')[0] || element.find('textarea')[0] || element.find('select')[0]);
             };
 
             return {
                 restrict: 'E',
-                priority: 100,        // We need this directive to happen before ng-model
-                terminal: true,       // We are going to deal with this element
-                require: '?^form',    // If we are in a form then we can access the ngModelController
+                priority: 100, // We need this directive to happen before ng-model
+                terminal: true, // We are going to deal with this element
+                require: '?^form', // If we are in a form then we can access the ngModelController
                 compile: function compile(element, attrs) {
                     // Find all the <validator> child elements and extract their validation message info
                     var validationMessages = [];
-                    angular.forEach(element.find('validator'), function (validatorElement) {
+                    angular.forEach(element.find('validator'), function(validatorElement) {
                         validatorElement = angular.element(validatorElement);
                         validationMessages.push({
                             key: validatorElement.attr('key'),
@@ -45,31 +45,31 @@ define([
                     }
 
                     // Load up the template for this kind of field
-                    var fieldType = attrs.fieldType || 'input';   // Default to the simple input if none given
+                    var fieldType = attrs.fieldType || 'input'; // Default to the simple input if none given
 
                     var templateHTML;
 
                     switch (fieldType) {
-                        case 'input' :
+                        case 'input':
                             templateHTML = input_template;
                             break;
-                        case 'select' :
+                        case 'select':
                             templateHTML = select_template;
                             break;
-                        case 'textarea' :
+                        case 'textarea':
                             templateHTML = textarea_template;
                             break;
                         default:
                             throw new Error('unknown field-type template: ' + fieldType);
                     }
 
-                    var getFieldElement = function () {
+                    var getFieldElement = function() {
                         var newElement = angular.element(templateHTML);
                         var inputElement = findInputElement(newElement);
 
                         // Copy over the attributes to the input element
                         // At least the ng-model attribute must be copied because we can't use interpolation in the template
-                        angular.forEach(element[0].attributes, function (attribute) {
+                        angular.forEach(element[0].attributes, function(attribute) {
                             var value = attribute.value;
                             var key = attribute.name;
                             inputElement.attr(key, value);
@@ -82,7 +82,7 @@ define([
                         return newElement;
                     };
 
-                    return function (scope, element, attrs, formController) {
+                    return function(scope, element, attrs, formController) {
                         var newElement = getFieldElement();
                         // Our template will have its own child scope
                         var childScope = scope.$new();
@@ -104,9 +104,9 @@ define([
                         // TODO: Consider moving this validator stuff into its own directive
                         // and use a directive controller to wire it all up
                         childScope.$validationMessages = {};
-                        angular.forEach(validationMessages, function (validationMessage) {
+                        angular.forEach(validationMessages, function(validationMessage) {
                             // We need to watch in case it has interpolated values that need processing
-                            scope.$watch(validationMessage.getMessage, function (message) {
+                            scope.$watch(validationMessage.getMessage, function(message) {
                                 childScope.$validationMessages[validationMessage.key] = message;
                             });
                         });
@@ -114,7 +114,7 @@ define([
                         // We must compile our new element in the postLink function rather than in the compile function
                         // (i.e. after any parent form element has been linked)
                         // otherwise the new input won't pick up the FormController
-                        $compile(newElement)(childScope, function (clone) {
+                        $compile(newElement)(childScope, function(clone) {
                             // Place our new element after the original element
                             element.after(clone);
                             // Remove our original element

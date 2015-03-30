@@ -6,12 +6,12 @@
  * @author Mark Lagendijk <mark@lagendijk.info>
  * @license MIT
  */
-define(['angular', 'angular-ui-router', 'utils/Logger'], function (angular, router, logger) {
+define(['angular', 'angular-ui-router', 'utils/Logger'], function(angular, router, logger) {
 
     var moduleName = 'ui.router.stateHelper';
     var module = angular.module(moduleName, ['ui.router']);
     var stateHelperName = 'stateHelper';
-    module.provider(stateHelperName, ['$stateProvider', function ($stateProvider) {
+    module.provider(stateHelperName, ['$stateProvider', function($stateProvider) {
         var self = this;
 
         /**
@@ -26,19 +26,19 @@ define(['angular', 'angular-ui-router', 'utils/Logger'], function (angular, rout
          * @param {Array} [state.children] - An optional array of child states.
          * @param {Boolean} keepOriginalNames - An optional flag that prevents conversion of names to dot notation if true.
          */
-        this.setNestedState = function (state, keepOriginalNames) {
+        this.setNestedState = function(state, keepOriginalNames) {
             if (!keepOriginalNames) {
                 fixStateName(state);
             }
             var stateHeader = "Registering state ";
-            if( state.abstract) {
+            if (state.abstract) {
                 stateHeader = "Registering abstract state ";
             }
             logger.log(stateHeader + state.name + " on url " + state.url);
             $stateProvider.state(state);
 
             if (state.children && state.children.length) {
-                state.children.forEach(function (childState) {
+                state.children.forEach(function(childState) {
                     childState.parent = state;
                     self.setNestedState(childState, keepOriginalNames);
                 });

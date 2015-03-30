@@ -12,13 +12,13 @@ define(
         'directive/proto/protoDirectives',
         'directive/crud/pagination'
     ],
-    function (angular) {
+    function(angular) {
         'use strict';
         var moduleName = 'appDirectiveModule';
 
         var directivesModules = Array.prototype.slice.call(arguments, 1);
 
-        var dependenciesArray = _.chain(directivesModules).map(function (dirM) {
+        var dependenciesArray = _.chain(directivesModules).map(function(dirM) {
             return dirM.name || [];
         }).flatten(true).uniq().value();
         var module = angular.module(moduleName, dependenciesArray);

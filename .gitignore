@@ -22,3 +22,4 @@ src/main/app/scripts/vendor/
 dist/
 selenium/
 bower_dependencies/
+.DS_Store

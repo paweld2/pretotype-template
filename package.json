@@ -21,6 +21,7 @@
         "grunt-sed": "~0.1.1",
         "grunt-contrib-less": "~1.0.0",
         "grunt-karma": "~0.10.1",
+        "grunt-jsbeautifier": "~0.2.10",
         "ng-midway-tester": "2.0.5",
         "protractor": "2.0.0",
         "karma-requirejs": "0.2.2",

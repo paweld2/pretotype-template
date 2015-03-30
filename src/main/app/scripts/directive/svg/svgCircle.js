@@ -2,7 +2,7 @@ define([
         'angular',
         "text!directive/svg/svgCircle.html"
     ],
-    function (angular,template) {
+    function(angular, template) {
         'use strict';
         var moduleName = 'niSvgCircleModule';
         var module = angular.module(moduleName, []);

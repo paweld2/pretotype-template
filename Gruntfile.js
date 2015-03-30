@@ -207,6 +207,11 @@ module.exports = function (grunt) {
                 configFile: 'src/test/karma-unit.conf.js',
                 background: true
             }
+        },
+        "jsbeautifier" : {
+            files : ["src/main/app/**/*.js","src/main/app/**/*.html"],
+            options : {
+            }
         }
     });
 
@@ -223,6 +228,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks("grunt-jsbeautifier");
 
     // CSS distribution task.
     grunt.registerTask('dist-css', ['less']);

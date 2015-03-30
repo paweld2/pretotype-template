@@ -1,4 +1,4 @@
-define(['angular', 'underscore'], function (angular, _) {
+define(['angular', 'underscore'], function(angular, _) {
     'use strict';
     var moduleName = 'simpleCrudMixin';
     var module = angular.module(moduleName, []);
@@ -12,7 +12,7 @@ define(['angular', 'underscore'], function (angular, _) {
         var maxPageNr = 10;
 
 
-        scopeRef.pagerData = function () {
+        scopeRef.pagerData = function() {
             var nrOfCells = 6;
             var startPage = currPage - nrOfCells;
             if (startPage < 0) {
@@ -20,8 +20,12 @@ define(['angular', 'underscore'], function (angular, _) {
             }
             var leftOn = currPage !== 0;
             var rightOn = startPage + nrOfCells < maxPageNr;
-            _.chain().range(startPage, startPage + nrOfCells).map(function (pageNr) {
-                return {page: pageNr, sel: currPage === pageNr, pagerType: 'p'};
+            _.chain().range(startPage, startPage + nrOfCells).map(function(pageNr) {
+                return {
+                    page: pageNr,
+                    sel: currPage === pageNr,
+                    pagerType: 'p'
+                };
             }).value();
         };
 
@@ -31,43 +35,51 @@ define(['angular', 'underscore'], function (angular, _) {
 
     };
 
-    module.factory(simpleCrudScopeMixin, [function () {
-        var crudMixinBuilder = function ($scope) {
+    module.factory(simpleCrudScopeMixin, [function() {
+        var crudMixinBuilder = function($scope) {
             $scope.crudData = {
-                columnNames: [
-                    {
-                        name: "#",
-                        sort: "up"
-                    },
-                    {
-                        name: "X",
-                        sort: "down"
-                    },
-                    {
-                        name: "Y",
-                        sort: ""
-                    },
-                    {
-                        name: "Z",
-                        sort: ""
-                    }
-                ],
+                columnNames: [{
+                    name: "#",
+                    sort: "up"
+                }, {
+                    name: "X",
+                    sort: "down"
+                }, {
+                    name: "Y",
+                    sort: ""
+                }, {
+                    name: "Z",
+                    sort: ""
+                }],
                 dataSourceInfo: {
                     nrOfItems: 100,
                     pageSize: 20,
                     offset: 20,
                     selPage: 1
                 },
-                pagerData: [
-                    {pagerType: '<'},
-                    {page: 1, sel: true, pagerType: 'p'},
-                    {page: 2, pagerType: 'p'},
-                    {page: 3, pagerType: 'p'},
-                    {page: 4, pagerType: 'p'},
-                    { pagerType: 's'},
-                    {page: 20, pagerType: 'p'},
-                    {pagerType: '>'}
-                ],
+                pagerData: [{
+                    pagerType: '<'
+                }, {
+                    page: 1,
+                    sel: true,
+                    pagerType: 'p'
+                }, {
+                    page: 2,
+                    pagerType: 'p'
+                }, {
+                    page: 3,
+                    pagerType: 'p'
+                }, {
+                    page: 4,
+                    pagerType: 'p'
+                }, {
+                    pagerType: 's'
+                }, {
+                    page: 20,
+                    pagerType: 'p'
+                }, {
+                    pagerType: '>'
+                }],
                 displayTableData: [
                     [1, "a", "b", "c"],
                     [2, "a2", "b2", "c2"],
@@ -78,20 +90,20 @@ define(['angular', 'underscore'], function (angular, _) {
                 selectedRow: [1, 2]
             };
             $scope.crudlogic = {
-                goToPage: function (pageRef) {
+                goToPage: function(pageRef) {
                     console.log(pageRef);
                 },
-                goToPreviousPage: function () {
+                goToPreviousPage: function() {
 
                 },
-                goToNextPage: function () {
+                goToNextPage: function() {
 
                 },
-                directSelect: function (row, $event) {
+                directSelect: function(row, $event) {
                     console.log(row);
                     console.log($event);
                 },
-                selectRow: function (row, $event) {
+                selectRow: function(row, $event) {
                     var toAdd = [row[0]];
 
                     function rowMatcher(sel) {
@@ -115,8 +127,8 @@ define(['angular', 'underscore'], function (angular, _) {
 
 
                 },
-                sortColumn: function (colName) {
-                    _.chain($scope.crudData.columnNames).each(function (col) {
+                sortColumn: function(colName) {
+                    _.chain($scope.crudData.columnNames).each(function(col) {
                         if (col.name === colName) {
                             col.sort = col.sort === "down" ? "up" : "down";
                         } else {
@@ -125,16 +137,16 @@ define(['angular', 'underscore'], function (angular, _) {
                     });
                 },
                 switchView: {
-                    list: function () {
+                    list: function() {
                         $scope.crudStatus.viewStatus = "list";
                     },
-                    edit: function () {
+                    edit: function() {
                         $scope.crudStatus.viewStatus = "edit";
                     },
-                    delete: function () {
+                    delete: function() {
                         $scope.crudStatus.viewStatus = "delete";
                     },
-                    view: function () {
+                    view: function() {
                         $scope.crudStatus.viewStatus = "view";
                     }
                 }

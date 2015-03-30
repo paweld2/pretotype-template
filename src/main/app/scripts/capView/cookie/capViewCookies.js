@@ -4,7 +4,7 @@ define(
         'capabilities/auth/authorizationCapability',
         'text!capView/cookie/cookiesPolicy.html'
     ],
-    function (rootLayout, authorization, policy_te) {
+    function(rootLayout, authorization, policy_te) {
         var accessLevels = authorization.securityModel.accessLevels;
         var cookieState = {
             name: 'cookies',

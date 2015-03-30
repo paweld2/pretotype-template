@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -10,17 +11,18 @@
 </head>
 
 <body ng-class="$state.current.data.pageStyle" ng-controller="AuthorizationCtrl" ng-cloak>
-<div ni-cookie-eu></div>
-<div ui-view></div>
-<script>
-    var require = {
-        config: {
-            'appConfig': {
-                'version' : '{{ version_data }}'
+    <div ni-cookie-eu></div>
+    <div ui-view></div>
+    <script>
+        var require = {
+            config: {
+                'appConfig': {
+                    'version': '{{ version_data }}'
+                }
             }
-        }
-    };
-</script>
-<script src="app_bin.js?{{ version_data }}"></script>
+        };
+    </script>
+    <script src="app_bin.js?{{ version_data }}"></script>
 </body>
+
 </html>

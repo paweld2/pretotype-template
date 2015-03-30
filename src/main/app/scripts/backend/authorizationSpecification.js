@@ -1,11 +1,14 @@
 define([
     'underscore',
     'eelnss',
-    'utils/Logger'
+    'utils/Logger',
+    'capabilities/auth/authorizationContract'
 
-], function (_, lenses, logger) {
+], function(_, lenses, logger, authorizationContract) {
 
-    function registerSpecification(contract, globalState, cookieCLen, api) {
+    var contract = authorizationContract;
+
+    function specificationRegistration(globalState, cookieCLen, api) {
         var sessionCLen = lenses.api.buildContextLen("app.sessions.{:sessionID}.(user,logged)");
         var usersByUIDCLen = lenses.api.buildContextLen("app.users.{:uID}.(email,password,name,isActive,isAdmin)");
         var userDTOCLen = lenses.api.buildContextLen("(uid,email,password,name,authorization.isActive,authorization.isAdmin)");
@@ -56,8 +59,10 @@ define([
             var user = userLoggedLen.get(state);
             return [200, user];
         }
-
     }
 
-    return registerSpecification;
+    return {
+        apiContract: contract,
+        specificationRegistration: specificationRegistration
+    };
 });

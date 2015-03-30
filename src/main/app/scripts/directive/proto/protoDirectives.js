@@ -1,22 +1,22 @@
 define([
         'angular'
     ],
-    function (angular, template) {
+    function(angular, template) {
         'use strict';
         var moduleName = 'protoJSModule';
         var module = angular.module(moduleName, []);
 
-        module.directive('proP', [function () {
+        module.directive('proP', [function() {
             var ddo = {
                 restrict: 'EA',
                 scope: false,
-                controller: function ($scope, $element, $attrs, $transclude) {
+                controller: function($scope, $element, $attrs, $transclude) {
                     $scope.proP = true;
                     $scope.proData = {};
                     $scope.proEvents = {};
-                    this.registerChildren = function (proC) {
+                    this.registerChildren = function(proC) {
                         proC.register = {
-                            trigger: function () {
+                            trigger: function() {
                                 console.log('registering ' + proC.childSignals.a);
                             }
                         };
@@ -26,7 +26,7 @@ define([
             };
             return ddo;
         }]);
-        module.directive('proC', [function () {
+        module.directive('proC', [function() {
             var ddo = {
                 require: '^proP',
                 restrict: 'EA',
@@ -34,13 +34,13 @@ define([
                     option: '@'
                 },
                 template: "<div><a ng-click='register.trigger()'>XXXXX</a></div>",
-                controller: function ($scope, $element, $attrs, $transclude) {
+                controller: function($scope, $element, $attrs, $transclude) {
                     $scope.proC = true;
                     $scope.childSignals = {
                         a: 'a'
                     };
                 },
-                link: function (scope, element, attrs, proPCtrl) {
+                link: function(scope, element, attrs, proPCtrl) {
                     proPCtrl.registerChildren(scope);
                 }
 

@@ -5,7 +5,7 @@ define(
         'capabilities/administration/administrationCapability',
         'text!capView/crudTest/mainTe.html'
     ],
-    function (rootLayout, authorization, administrationCapability, main_te) {
+    function(rootLayout, authorization, administrationCapability, main_te) {
         var accessLevels = authorization.securityModel.accessLevels;
 
         var testCrudSubApp = {
@@ -26,7 +26,7 @@ define(
             name: 'init',
             url: '/init',
             parent: testCrudSubApp,
-            controller : administrationCapability.testCrud,
+            controller: administrationCapability.testCrud,
             template: main_te
         };
         return {

@@ -6,27 +6,25 @@ define(
         'text!capView/welcomePage.html'
 
     ],
-    function (authorization, capabilities, rootLayout_te, welcome_te) {
+    function(authorization, capabilities, rootLayout_te, welcome_te) {
         var accessLevels = authorization.securityModel.accessLevels;
         var rootApp = {
             name: 'root',
             template: rootLayout_te,
             abstract: true,
             controller: capabilities.rootController,
-            children: [
-                {
-                    name: 'app',
-                    url: "/",
-                    views: {
-                        rootLayoutContent: {
-                            template: welcome_te
-                        }
-                    },
-                    data: {
-                        access: accessLevels.public
+            children: [{
+                name: 'app',
+                url: "/",
+                views: {
+                    rootLayoutContent: {
+                        template: welcome_te
                     }
+                },
+                data: {
+                    access: accessLevels.public
                 }
-            ]
+            }]
         };
         return {
             rootState: rootApp,

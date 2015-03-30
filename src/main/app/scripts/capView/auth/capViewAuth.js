@@ -3,7 +3,7 @@ define(
         'capabilities/auth/authorizationCapability',
         'text!capView/auth/loginTe.html'
     ],
-    function (authorization, login_te) {
+    function(authorization, login_te) {
         var accessLevels = authorization.securityModel.accessLevels;
 
         var loginState = {

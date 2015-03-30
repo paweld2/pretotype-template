@@ -1,4 +1,4 @@
-(function () {
+(function() {
     "use strict";
     require.config({
         paths: {
@@ -40,11 +40,11 @@
                 deps: ["underscore"]
             }
         },
-        urlArgs: "bust=" + (new Date()).getTime(),
+        //        urlArgs: "bust=" + (new Date()).getTime(),
         waitSeconds: 150
     });
 
-    require(['AppInjector'], function (App) {
+    require(['AppInjector'], function(App) {
         App.initialize();
         return {};
     });

@@ -2,30 +2,26 @@
     <div class="formContainer">
         <div class="loginHeader">
             <!--<img holder-js data-src="holder.js/300x200/sky">-->
-            <img src="assets/powo-logo-login.png"/>
+            <img src="assets/powo-logo-login.png" />
         </div>
         <div class="loginWindow container">
             <div class="brand-logo">
                 <!--<img holder-js data-src="holder.js/100x100/sky">-->
-                <img src="assets/sto-logo-white.png"/>
+                <img src="assets/sto-logo-white.png" />
             </div>
             <div class="col-md-12">
                 <form novalidate name="loginForm" class="form-horizontal" ni-submit="submit()">
                     <div class="form-items">
-                        <ni-field ng-model="data.email" field-type="input" type="email" label="Email"
-                                  placeholder="Wprowadź email" required="true">
+                        <ni-field ng-model="data.email" field-type="input" type="email" label="Email" placeholder="Wprowadź email" required="true">
                             <validator key="required">Pole jest wymagane</validator>
                             <validator key="email">Proszę podać prawidłowy email</validator>
                         </ni-field>
-                        <ni-field ng-model="data.password" field-type="input" type="password" label="Hasło"
-                                  placeholder="Wprowadź hasło" required="true" ng-minlength="8">
+                        <ni-field ng-model="data.password" field-type="input" type="password" label="Hasło" placeholder="Wprowadź hasło" required="true" ng-minlength="8">
                             <validator key="minlength">Hasło musi zawierać przynajmniej 8 znaków</validator>
                             <validator key="required">Pole jest wymagane</validator>
                         </ni-field>
 
-                        <p ng-if="error" class="help-block">Logowanie nie powiodło się. Proszę spróbować ponownie albo
-                            skontaktować
-                            się z administratorem systemu.</p>
+                        <p ng-if="error" class="help-block">Logowanie nie powiodło się. Proszę spróbować ponownie albo skontaktować się z administratorem systemu.</p>
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10" ng-show="!control.calling.active()">
@@ -42,7 +38,6 @@
     </div>
     <div class="loginFooter text-center">
         <!--<img holder-js data-src="holder.js/540x60/sky"/>-->
-        <img src="assets/login-icons.png"/>
+        <img src="assets/login-icons.png" />
     </div>
 </div>
-

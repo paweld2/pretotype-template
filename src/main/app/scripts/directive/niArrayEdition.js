@@ -3,16 +3,17 @@ define([
         'angular',
         "text!directive/template/dir/field/arrayField.html"
     ],
-    function (_, angular, templateHTML) {
+    function(_, angular, templateHTML) {
         'use strict';
         var moduleName = 'arrayEditionDirectiveModule';
         var module = angular.module(moduleName, []);
 
-        var createFieldName = function (modelID) {
+        var createFieldName = function(modelID) {
             return "field_" + modelID;
         };
 
         NiArrayFieldController.$inject = ['$scope', '$attrs'];
+
         function NiArrayFieldController($scope, $attrs) {
             // $name for the formController bind
             $scope.$modelId = $attrs.ngModel.replace(/\./g, '_').toLowerCase() + '_' + $scope.$id;
@@ -21,12 +22,14 @@ define([
             ctrl.$valid = true;
             ctrl.$invalid = false;
             ctrl.$dirty = false;
-            ctrl.$error = {min: false };
+            ctrl.$error = {
+                min: false
+            };
 
             // validation of min 1 value, it should be extracted to directive
-            $scope.$watch(function () {
+            $scope.$watch(function() {
                 return $scope.arrayToEdit;
-            }, function (values) {
+            }, function(values) {
                 if (ctrl.$form) {
                     var curr = values || [];
                     if (curr.length === 0) {
@@ -44,18 +47,18 @@ define([
 
             var fieldName = createFieldName($scope.$modelId);
             $scope[fieldName] = '';
-            $scope.edit = function (value) {
+            $scope.edit = function(value) {
                 $scope[fieldName] = value;
                 $scope.$broadcast('focusOn', $scope.arrayEditionGeneratedID);
                 $scope.remove(value);
             };
-            $scope.remove = function (value) {
+            $scope.remove = function(value) {
                 ctrl.$dirty = true;
                 var curr = $scope.arrayToEdit || [];
                 $scope.arrayToEdit = _.without(curr, value);
             };
 
-            $scope.add = function () {
+            $scope.add = function() {
                 ctrl.$dirty = true;
                 var newValue = $scope[fieldName];
                 newValue = newValue.trim();
@@ -65,7 +68,7 @@ define([
                     $scope[fieldName] = '';
                 }
             };
-            $scope.onEnterHandler = function ($event) {
+            $scope.onEnterHandler = function($event) {
                 if ($event.keyCode === 13) {
                     $event.preventDefault();
                     $scope.add();
@@ -73,15 +76,15 @@ define([
             };
         }
 
-        var findArrayEditInput = function (templateElement) {
+        var findArrayEditInput = function(templateElement) {
             return _.chain(templateElement.find('input'))
                 .map(angular.element)
-                .find(function (inputElem) {
+                .find(function(inputElem) {
                     return inputElem.attr('ng-keypress');
                 }).value();
         };
 
-        module.directive('niArrayField', ['$compile', '$interpolate', function ($compile, $interpolate) {
+        module.directive('niArrayField', ['$compile', '$interpolate', function($compile, $interpolate) {
             return {
                 restrict: 'E',
                 scope: {
@@ -91,12 +94,12 @@ define([
                     placeholder: '@'
                 },
                 controller: NiArrayFieldController,
-                priority: 100,        // We need this directive to happen before ng-model
-                terminal: true,       // We are going to deal with this element
-                require: ['niArrayField', '^form'],    // If we are in a form then we can access the ngModelController
+                priority: 100, // We need this directive to happen before ng-model
+                terminal: true, // We are going to deal with this element
+                require: ['niArrayField', '^form'], // If we are in a form then we can access the ngModelController
                 compile: function compile(element, attrs) {
                     var validationMessages = [];
-                    angular.forEach(element.find('validator'), function (validatorElement) {
+                    angular.forEach(element.find('validator'), function(validatorElement) {
                         validatorElement = angular.element(validatorElement);
                         validationMessages.push({
                             key: validatorElement.attr('key'),
@@ -117,7 +120,7 @@ define([
                     }
 
                     // prepare the template with label changed
-                    var getTemplateElement = function () {
+                    var getTemplateElement = function() {
                         var newElement = angular.element(templateHTML);
                         // Copy important attributes to the input element
                         // the original ng-model is bind to arrayToEdit in the isolated scope,
@@ -152,9 +155,9 @@ define([
                             newElement.find('label').attr('for', scope.$modelId);
 
                             scope.$validationMessages = {};
-                            angular.forEach(validationMessages, function (validationMessage) {
+                            angular.forEach(validationMessages, function(validationMessage) {
                                 // We need to watch in case it has interpolated values that need processing
-                                scope.$watch(validationMessage.getMessage, function (message) {
+                                scope.$watch(validationMessage.getMessage, function(message) {
                                     scope.$validationMessages[validationMessage.key] = message;
                                 });
                             });
@@ -162,7 +165,7 @@ define([
                             // We must compile our new element in the postLink function rather than in the compile function
                             // (i.e. after any parent form element has been linked)
                             // then the FormController is already setup
-                            $compile(newElement)(scope, function (clone) {
+                            $compile(newElement)(scope, function(clone) {
                                 // Place our new element after the original element
                                 iElement.after(clone);
                                 // Remove our original element
@@ -171,7 +174,7 @@ define([
                             // now add the array controller to the form
                             formCtrl.$addControl(arrayCtrl);
                             arrayCtrl.$form = formCtrl;
-                            scope.$on('$destroy', function () {
+                            scope.$on('$destroy', function() {
                                 formCtrl.$removeControl(arrayCtrl);
                             });
 

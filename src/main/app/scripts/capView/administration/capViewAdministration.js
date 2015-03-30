@@ -11,7 +11,7 @@ define(
         'text!capView/administration/students_upgrade.html',
         'text!capView/administration/students_import.html'
     ],
-    function (rootLayout, authorization, administrationCapability, main_te, menuPa, init_te, students_help_te, students_edition_te, students_upgrade_te, students_import_te) {
+    function(rootLayout, authorization, administrationCapability, main_te, menuPa, init_te, students_help_te, students_edition_te, students_upgrade_te, students_import_te) {
         var accessLevels = authorization.securityModel.accessLevels;
 
         var adminSubApp = {
@@ -57,38 +57,33 @@ define(
                     access: accessLevels.onlyAdmins
                 }
             },
-            children: [
-                {
-                    name: 'help',
-                    url: '/',
-                    template: students_help_te,
-                    data: {
-                        access: accessLevels.onlyAdmins
-                    }
-                },
-                {
-                    name: 'import',
-                    url: '/import',
-                    template: students_import_te,
-                    data: {
-                        access: accessLevels.onlyAdmins
-                    }
-                },
-                {
-                    name: 'edit',
-                    url: '/edit',
-                    controller: administrationCapability.studentsEditionController,
-                    template: students_edition_te
-                },
-                {
-                    name: 'upgrade',
-                    url: '/upgrade',
-                    template: students_upgrade_te,
-                    data: {
-                        access: accessLevels.onlyAdmins
-                    }
+            children: [{
+                name: 'help',
+                url: '/',
+                template: students_help_te,
+                data: {
+                    access: accessLevels.onlyAdmins
                 }
-            ]
+            }, {
+                name: 'import',
+                url: '/import',
+                template: students_import_te,
+                data: {
+                    access: accessLevels.onlyAdmins
+                }
+            }, {
+                name: 'edit',
+                url: '/edit',
+                controller: administrationCapability.studentsEditionController,
+                template: students_edition_te
+            }, {
+                name: 'upgrade',
+                url: '/upgrade',
+                template: students_upgrade_te,
+                data: {
+                    access: accessLevels.onlyAdmins
+                }
+            }]
         };
         return {
             capViews: [

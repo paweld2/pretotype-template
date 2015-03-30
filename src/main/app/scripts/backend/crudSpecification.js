@@ -1,11 +1,14 @@
 define([
     'underscore',
     'eelnss',
-    'utils/Logger'
+    'utils/Logger',
+    'capabilities/crud/abstractCrudContract'
 
-], function (_, lenses, logger) {
+], function(_, lenses, logger, abstractCrudContract) {
 
-    function registerSpecification(contract, globalState, cookieCLen, api) {
+    var contract = abstractCrudContract;
+
+    function specificationRegistration(globalState, cookieCLen, api) {
 
         var state = globalState;
         var metaModelRef = lenses.api.buildContextLen("crud.metaModel").bindContext([]);
@@ -77,5 +80,8 @@ define([
 
     }
 
-    return registerSpecification;
+    return {
+        apiContract: contract,
+        specificationRegistration: specificationRegistration
+    };
 });

@@ -1,140 +1,142 @@
 <div class="col-md-9">
-	<ol class="breadcrumb">
-		<li><a ui-sref="^.^.menu">Administracja</a></li>
-		<li><a ui-sref="^.help">Uczniowie</a></li>
-		<li class="active">Edycja</li>
-	</ol>
-	<div>
-		<h3>Edycja uczniów</h3>
-	</div>
+    <ol class="breadcrumb">
+        <li><a ui-sref="^.^.menu">Administracja</a></li>
+        <li><a ui-sref="^.help">Uczniowie</a></li>
+        <li class="active">Edycja</li>
+    </ol>
+    <div>
+        <h3>Edycja uczniów</h3>
+    </div>
 
 
-	<h1>Widok tabeli</h1>
+    <h1>Widok tabeli</h1>
 
-	<div class="btn-toolbar" role="toolbar">
-		<div class="btn-group">
-			<button type="button" class="btn btn-default" ng-disabled="crudStatus.actions.addNewDisabled" ng-click="crudlogic.addNew()"><span class="glyphicon glyphicon-plus"></span> Dodaj nowe</button>
-			<button type="button" class="btn btn-default" ng-disabled="crudStatus.actions.editDisabled" ng-click="crudlogic.edit()"><span class="glyphicon glyphicon-pencil"></span> Edytuj</button>
-			<button type="button" class="btn btn-default" ng-disabled="crudStatus.actions.deleteDisabled" ng-click="crudlogic.delete()"><span class="glyphicon glyphicon-remove"></span> Usuń</button>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Wyszukiwanie</button>
-		</div>
-	</div>
-	<table class="table">
-		<thead>
-		<tr>
-			<th></th>
-			<th ng-repeat="colInfo in crudData.columnNames" ng-class="{sortUp : colInfo.sort == 'up',sortDown : colInfo.sort == 'down'}" ng-click="crudlogic.sortColumn(colInfo.name)">{{colInfo.name}} <span class="upArrow">&#9650;</span> <span class="downArrow">&#9660;</span></th>
-		</tr>
-		<tbody>
-		<tr ng-repeat="singleRow in crudData.displayTableData" ng-class="{info: crudData.selectedRow.indexOf(singleRow[0]) != -1}" ng-click="crudlogic.selectRow(singleRow,$event)">
-			<td class="referenceColumn" ng-click="crudlogic.directSelect(singleRow,$event)"><span class="glyphicon glyphicon-pencil"></span></td>
-			<td ng-repeat="v in singleRow">{{v}}</td>
-		</tr>
-		</tbody>
-		</thead>
-	</table>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default" ng-disabled="crudStatus.actions.addNewDisabled" ng-click="crudlogic.addNew()"><span class="glyphicon glyphicon-plus"></span> Dodaj nowe</button>
+            <button type="button" class="btn btn-default" ng-disabled="crudStatus.actions.editDisabled" ng-click="crudlogic.edit()"><span class="glyphicon glyphicon-pencil"></span> Edytuj</button>
+            <button type="button" class="btn btn-default" ng-disabled="crudStatus.actions.deleteDisabled" ng-click="crudlogic.delete()"><span class="glyphicon glyphicon-remove"></span> Usuń</button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Wyszukiwanie</button>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th ng-repeat="colInfo in crudData.columnNames" ng-class="{sortUp : colInfo.sort == 'up',sortDown : colInfo.sort == 'down'}" ng-click="crudlogic.sortColumn(colInfo.name)">{{colInfo.name}} <span class="upArrow">&#9650;</span> <span class="downArrow">&#9660;</span></th>
+            </tr>
+            <tbody>
+                <tr ng-repeat="singleRow in crudData.displayTableData" ng-class="{info: crudData.selectedRow.indexOf(singleRow[0]) != -1}" ng-click="crudlogic.selectRow(singleRow,$event)">
+                    <td class="referenceColumn" ng-click="crudlogic.directSelect(singleRow,$event)"><span class="glyphicon glyphicon-pencil"></span></td>
+                    <td ng-repeat="v in singleRow">{{v}}</td>
+                </tr>
+            </tbody>
+        </thead>
+    </table>
 
-	<div ni-pagination></div>
+    <div ni-pagination></div>
 
-	<ul class="pagination">
-		<li ng-repeat="p in crudData.pagerData" ng-class="{active : p.sel}" ng-switch="p.pagerType">
-			<a ng-switch-when="p" ng-click="crudlogic.goToPage(p)">{{p.page}}</a>
-			<a ng-switch-when="s">...</a>
-			<a ng-switch-when="<" ng-click="crudlogic.goToPreviousPage()">&laquo;</a>
-			<a ng-switch-when=">" ng-click="crudlogic.goToNextPage()">&raquo;</a>
-		</li>
-	</ul>
+    <ul class="pagination">
+        <li ng-repeat="p in crudData.pagerData" ng-class="{active : p.sel}" ng-switch="p.pagerType">
+            <a ng-switch-when="p" ng-click="crudlogic.goToPage(p)">{{p.page}}</a>
+            <a ng-switch-when="s">...</a>
+            <a ng-switch-when="<" ng-click="crudlogic.goToPreviousPage()">&laquo;</a>
+            <a ng-switch-when=">" ng-click="crudlogic.goToNextPage()">&raquo;</a>
+        </li>
+    </ul>
 
 
-	<pre>
+    <pre>
 		{{ crudData | json}}
 	</pre>
 
 
-	<div>
-		<div class="btn-toolbar" role="toolbar">
-			<div class="btn-group">
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Dodaj nowe</button>
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edytuj</button>
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Usuń</button>
-			</div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>Wyszukiwanie</button>
-			</div>
-		</div>
-		<h3>List uczniów</h3>
-		<ul class="pagination">
-			<li><a>&laquo;</a></li>
-			<li><a>1</a></li>
-			<li><a>2</a></li>
-			<li><a>3</a></li>
-			<li><a>4</a></li>
-			<li><a>5</a></li>
-			<li><a>&raquo;</a></li>
-		</ul>
-		<table class="table table-striped">
-			<thead>
-			<tr>
-				<th>#</th>
-				<th>Nazwisko <span>&#9650;</span> <span>&#9660;</span></th>
-				<th>Imię <span>&#9650;</span> <span>&#9660;</span></th>
-				<th>Klasa <span>&#9650;</span> <span>&#9660;</span></th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>1</td>
-				<td>Mark</td>
-				<td>Otto</td>
-				<td>2A</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>Jacob</td>
-				<td>Thornton</td>
-				<td>3A</td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td>Larry</td>
-				<td>the Bird</td>
-				<td>0A</td>
-			</tr>
-			</tbody>
-		</table>
-		<ul class="pagination">
-			<li><a>&laquo;</a></li>
-			<li><a>1</a></li>
-			<li><a>2</a></li>
-			<li><a>3</a></li>
-			<li><a>4</a></li>
-			<li><a>5</a></li>
-			<li><a>&raquo;</a></li>
-		</ul>
+    <div>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Dodaj nowe</button>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edytuj</button>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Usuń</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>Wyszukiwanie</button>
+            </div>
+        </div>
+        <h3>List uczniów</h3>
+        <ul class="pagination">
+            <li><a>&laquo;</a></li>
+            <li><a>1</a></li>
+            <li><a>2</a></li>
+            <li><a>3</a></li>
+            <li><a>4</a></li>
+            <li><a>5</a></li>
+            <li><a>&raquo;</a></li>
+        </ul>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nazwisko <span>&#9650;</span> <span>&#9660;</span></th>
+                    <th>Imię <span>&#9650;</span> <span>&#9660;</span></th>
+                    <th>Klasa <span>&#9650;</span> <span>&#9660;</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>2A</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>3A</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>0A</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul class="pagination">
+            <li><a>&laquo;</a></li>
+            <li><a>1</a></li>
+            <li><a>2</a></li>
+            <li><a>3</a></li>
+            <li><a>4</a></li>
+            <li><a>5</a></li>
+            <li><a>&raquo;</a></li>
+        </ul>
 
-	</div>
-
-
-	<h1>Widok podgłądu</h1>
-
-	<h1>Widok edycji</h1>
-
-	<form novalidate name="editForm" class="form-horizontal" ni-submit="applyKeywordForm()" role="form">
-		<ni-field ng-model="data.lastname" type="text" label="Nazwisko" placeholder="Nazwisko" required="true" ng- minlength="1">
-			<validator key="required">Nazwisko jest obowiązkowy</validator>
-			<validator key="minlength">Nazwisko musi mieć przenajmniej 1 znak</validator>
-		</ni-field>
-		<ni-field ng-model="data.name" type="text" label="Imię" placeholder="Imię" required="true" ng- minlength="1">
-			<validator key="required">Nazwisko jest obowiązkowy</validator>
-			<validator key="minlength">Nazwisko musi mieć przynajmniej 1 znak</validator>
-		</ni-field>
-		<!--<ni-field ng-model="data.class" field-type="select" ng-options="c in ['0A','0B','1A','1B']" label="Klasa" required="true">-->      <!--<validator key="required">Wybór klasy jest obowiązkowy</validator>-->    <!--</ni-field>-->
-	</form>
+    </div>
 
 
-	<h1>Widok raportu</h1>
+    <h1>Widok podgłądu</h1>
+
+    <h1>Widok edycji</h1>
+
+    <form novalidate name="editForm" class="form-horizontal" ni-submit="applyKeywordForm()" role="form">
+        <ni-field ng-model="data.lastname" type="text" label="Nazwisko" placeholder="Nazwisko" required="true" ng- minlength="1">
+            <validator key="required">Nazwisko jest obowiązkowy</validator>
+            <validator key="minlength">Nazwisko musi mieć przenajmniej 1 znak</validator>
+        </ni-field>
+        <ni-field ng-model="data.name" type="text" label="Imię" placeholder="Imię" required="true" ng- minlength="1">
+            <validator key="required">Nazwisko jest obowiązkowy</validator>
+            <validator key="minlength">Nazwisko musi mieć przynajmniej 1 znak</validator>
+        </ni-field>
+        <!--<ni-field ng-model="data.class" field-type="select" ng-options="c in ['0A','0B','1A','1B']" label="Klasa" required="true">-->
+        <!--<validator key="required">Wybór klasy jest obowiązkowy</validator>-->
+        <!--</ni-field>-->
+    </form>
+
+
+    <h1>Widok raportu</h1>
 
 
 </div>

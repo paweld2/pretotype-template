@@ -2,7 +2,7 @@ define([
         'angular',
         'marked'
     ],
-    function (angular, markedLib) {
+    function(angular, markedLib) {
         'use strict';
         var moduleName = 'markedJSModule';
         var module = angular.module(moduleName, []);
@@ -11,7 +11,7 @@ define([
 
         module.constant('__marked', markedLib);
 
-        module.directive('marked', ['__marked', function (marked) {
+        module.directive('marked', ['__marked', function(marked) {
             return {
                 restrict: 'AE',
                 replace: true,
@@ -20,9 +20,10 @@ define([
                     mdFile: '=',
                     marked: '='
                 },
-                link: function (scope, element, attrs) {
+                link: function(scope, element, attrs) {
                     var value = scope.marked || element.text() || '';
                     set(value);
+
                     function set(val) {
                         var m = marked(val || '', scope.opts || null);
                         element.html(m);

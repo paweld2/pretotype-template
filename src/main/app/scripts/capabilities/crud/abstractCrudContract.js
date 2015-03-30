@@ -1,8 +1,5 @@
-define([
-        'angular',
-        'utils/BackendSpecification'
-    ],
-    function (angular, backendSpecBuilder) {
+define([],
+    function() {
         var crudApiContract = {
             id: 'simpleCrud',
             base: '/backend/crud/',
@@ -14,6 +11,5 @@ define([
             }
         };
 
-
-        return backendSpecBuilder.buildResourceModulesFromContract(crudApiContract);
+        return crudApiContract;
     });
