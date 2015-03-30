@@ -2,7 +2,7 @@ define(['angular', 'underscore'], function(angular, _) {
     var moduleName = 'controlModule';
     var module = angular.module(moduleName, []);
 
-    var rootControllerName = 'rootController';
+    var rootControllerName = 'RootController';
 
     module.controller(rootControllerName, ['$scope', function($scope) {
 

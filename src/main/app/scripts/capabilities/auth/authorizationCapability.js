@@ -17,8 +17,8 @@ define(
         var moduleName = 'authorizationCapabilityModule';
         var module = angular.module(moduleName, [contractBackend.name, promiseTrackerMixin.name]);
         var authorizationServiceName = 'authorizationService';
-        var authRootControllerName = 'AuthorizationCtrl';
-        var loginControllerName = 'LoginCtrl';
+        var authRootControllerName = 'AuthorizationController';
+        var loginControllerName = 'LoginController';
 
         module.config(['$httpProvider',
             function($httpProvider) {

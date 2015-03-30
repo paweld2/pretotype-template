@@ -13,8 +13,8 @@ define(
 
         var moduleName = 'administrationCapabilityModule';
         var module = angular.module(moduleName, [promiseTrackerMixin.name, simpleCrudMixin.name, crudCapability.name]);
-        var studentCrudCtrl = 'studentCrudCtrl';
-        var testCrudCtrl = 'testCrudCtrl';
+        var studentCrudCtrl = 'StudentCrudController';
+        var testCrudCtrl = 'TestCrudController';
 
         module.controller(testCrudCtrl, ['$scope', '$state', promiseTrackerMixin.asyncTrackingScope, crudCapability.crudService,
             function($scope, $state, asyncTrackingScope, crudService) {
