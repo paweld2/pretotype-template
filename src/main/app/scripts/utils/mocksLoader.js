@@ -10,46 +10,13 @@ define([
     function (angular, has, appConfig, mocks, _, logger, cookieLenses) {
 
         var moduleName = 'mockMainModule';
-
-        if (!has('fakeBackend')) {
-            return {
-                m: angular.module(moduleName, []),
-                name: moduleName,
-                registerSpecification: function (contract, spec) {
-                    logger.log('No mocks. Ignoring api contract ' + contract.specification.id);
-                }
-            };
-        }
-
-        var module = angular.module(moduleName, ['ngMockE2E', cookieLenses.name]);
-
-        module.config(['$provide', function ($provide) {
-            $provide.decorator('$httpBackend', angular.mock.e2e.$httpBackendDecorator);
-        }]);
-        if (has('delayFakeBackend')) {
-            logger.log("delayFakeBackend  is set to " + appConfig.fakeBackendDelay);
-            var delay = appConfig.fakeBackendDelay || 500;
-
-            // this breaks tests on protractor, configuration is exposed for requirejs
-            module.config(function ($provide) {
-                $provide.decorator('$httpBackend', ['$delegate', '$interval', '$q', function ($delegate, $interval, $q) {
-                    var proxy = function (method, url, data, callback, headers) {
-                        var interceptor = function () {
-                            var _this = this,
-                                _arguments = arguments;
-                            $interval(function () {
-                                callback.apply(_this, _arguments);
-                            }, delay, 1);
-                        };
-                        return $delegate.call(this, method, url, data, interceptor, headers);
-                    };
-                    for (var key in $delegate) {
-                        proxy[key] = $delegate[key];
-                    }
-                    return proxy;
-                }]);
-            });
-        }
+        var noOpModule = {
+                         m: angular.module(moduleName, []),
+                         name: moduleName,
+                         registerSpecification: function (contract, spec) {
+                             logger.log('No mocks. Ignoring api contract ' + contract.specification.id);
+                         }
+                     };
 
         var paramsMatcher = /:[^\/]*/;
         var paramsMatcherInFolder = /:[^\/]*\//;
@@ -119,5 +86,49 @@ define([
             m: module,
             name: moduleName,
             registerSpecification: _registerSpecification
+        };
+
+
+        function loadMockBackend(listOfBackendSpecifications){
+            if (!has('fakeBackend')) {
+                return noOpModule;
+            }
+
+            var module = angular.module(moduleName, ['ngMockE2E', cookieLenses.name]);
+
+            module.config(['$provide', function ($provide) {
+                $provide.decorator('$httpBackend', angular.mock.e2e.$httpBackendDecorator);
+            }]);
+            if (has('delayFakeBackend')) {
+                logger.log("delayFakeBackend  is set to " + appConfig.fakeBackendDelay);
+                var delay = appConfig.fakeBackendDelay || 500;
+
+                // this breaks tests on protractor, configuration is exposed for requirejs
+                module.config(function ($provide) {
+                    $provide.decorator('$httpBackend', ['$delegate', '$interval', '$q', function ($delegate, $interval, $q) {
+                        var proxy = function (method, url, data, callback, headers) {
+                            var interceptor = function () {
+                                var _this = this,
+                                    _arguments = arguments;
+                                $interval(function () {
+                                    callback.apply(_this, _arguments);
+                                }, delay, 1);
+                            };
+                            return $delegate.call(this, method, url, data, interceptor, headers);
+                        };
+                        for (var key in $delegate) {
+                            proxy[key] = $delegate[key];
+                        }
+                        return proxy;
+                    }]);
+                }                                                                                                                                                                                                                                                                                                                                                                                                           );
+
+        }
+
+
+        }
+
+        return {
+            loadMockBackend : loadMockBackend
         };
     });
