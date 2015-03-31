@@ -3,13 +3,13 @@ define(
         'capView/capViewRootLayout',
         'capabilities/auth/authorizationCapability',
         'capabilities/administration/administrationCapability',
-        'text!capView/administration/mainTe.html',
-        'text!capView/administration/menuPa.html',
-        'text!capView/administration/init.html',
-        'text!capView/administration/students_help.html',
-        'text!capView/administration/students_edition.html',
-        'text!capView/administration/students_upgrade.html',
-        'text!capView/administration/students_import.html'
+        'text!./mainTe.html',
+        'text!./menuPa.html',
+        'text!./init.html',
+        'text!./students_help.html',
+        'text!./students_edition.html',
+        'text!./students_upgrade.html',
+        'text!./students_import.html'
     ],
     function(rootLayout, authorization, administrationCapability, main_te, menuPa, init_te, students_help_te, students_edition_te, students_upgrade_te, students_import_te) {
         var accessLevels = authorization.securityModel.accessLevels;
@@ -28,7 +28,8 @@ define(
                 access: accessLevels.admin
             },
             ncyBreadcrumb: {
-                label: 'Administracja'
+                label: 'Administracja',
+                parent: rootLayout.ncyBreadcrumbParent
             }
         };
         var adminMenu = {

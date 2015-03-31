@@ -8,9 +8,7 @@ define(
         'directive/partials/appPartialDirectives',
         'directive/cookies/cookiesEUDirective',
         'directive/holderJs',
-        'directive/marked',
-        'directive/proto/protoDirectives',
-        'directive/crud/pagination'
+        'directive/marked'
     ],
     function(angular) {
         'use strict';

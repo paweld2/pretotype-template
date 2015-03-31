@@ -3,11 +3,11 @@ define(
         'utils/routingLoader',
         'capView/capViewRootLayout',
         'capView/users/capViewUsers',
+        'capView/students/capViewStudents',
+        'capView/appointment/capViewAppointment',
         'capView/auth/capViewAuth',
-        'capView/crudTest/capViewCrudTest',
         'capView/administration/capViewAdministration',
-        'capView/cookie/capViewCookies',
-        'capView/stateTest/capViewStateTest'
+        'capView/cookie/capViewCookies'
     ],
     function(routingLoader) {
         var capViewList = Array.prototype.slice.call(arguments, 1);

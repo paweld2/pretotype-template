@@ -30,7 +30,7 @@ define(
         };
         return {
             rootState: rootApp,
-            ncyBreadcrumbParent : 'root.app',
+            ncyBreadcrumbParent: 'root.app',
             capViews: [
                 rootApp
             ],

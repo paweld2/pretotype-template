@@ -32,10 +32,9 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6">
-            <a ui-sref="root.administration" class="thumbnail">
+        <div ng-if="auth.isAdmin" class="col-md-6">
+            <a ui-sref="root.administration.menu" class="thumbnail">
                 <img holder-js data-src="holder.js/240x180/sky/text:Zarządzenia">
-Ń
                 <div class="text-center caption">
                     <h3>Zarządzenia</h3>
                 </div>

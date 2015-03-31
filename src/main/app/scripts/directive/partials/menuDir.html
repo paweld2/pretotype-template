@@ -11,8 +11,6 @@
         <div class="collapse navbar-collapse" id="menu-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active"><a ui-sref="root.app">Pulpit</a></li>
-                <li ng-if="auth.isAdmin" ng-class="{active: $state.includes('root.administration')}">
-                    <a ui-sref="root.administration.menu">Administracja</a></li>
                 <li class="userActions" ng-if="!auth.isLogged"><a ui-sref="login">Logowanie</a></li>
                 <li class="userActions" ng-if="auth.isLogged"><a href="" ng-click="logout()">Wyloguj</a></li>
             </ul>

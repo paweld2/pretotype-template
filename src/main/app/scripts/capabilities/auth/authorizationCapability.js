@@ -13,7 +13,6 @@ define(
 
         var contractBackend = backendSpecBuilder.buildResourceModulesFromContract(contract);
 
-
         var moduleName = 'authorizationCapabilityModule';
         var module = angular.module(moduleName, [contractBackend.name, promiseTrackerMixin.name]);
         var authorizationServiceName = 'authorizationService';
