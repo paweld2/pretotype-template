@@ -12,7 +12,8 @@ define(
             url: "/users",
             parent: rootLayout.rootState,
             ncyBreadcrumb: {
-                label: 'Użytkownicy'
+                label: 'Użytkownicy',
+                parent: rootLayout.ncyBreadcrumbParent
             },
             views: {
                 rootLayoutContent: {

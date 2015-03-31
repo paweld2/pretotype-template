@@ -24,12 +24,13 @@ define(
                     access: accessLevels.public
                 },
                 ncyBreadcrumb: {
-                    label: 'Nawigacja'
+                    label: 'Start'
                 }
             }]
         };
         return {
             rootState: rootApp,
+            ncyBreadcrumbParent : 'root.app',
             capViews: [
                 rootApp
             ],
