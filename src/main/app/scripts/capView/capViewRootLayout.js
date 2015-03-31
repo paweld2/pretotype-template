@@ -4,7 +4,6 @@ define(
         'capabilities/controllersModule',
         'text!capView/rootLayoutTe.html',
         'text!capView/welcomePage.html'
-
     ],
     function(authorization, capabilities, rootLayout_te, welcome_te) {
         var accessLevels = authorization.securityModel.accessLevels;
@@ -23,6 +22,9 @@ define(
                 },
                 data: {
                     access: accessLevels.public
+                },
+                ncyBreadcrumb: {
+                    label: 'Nawigacja'
                 }
             }]
         };

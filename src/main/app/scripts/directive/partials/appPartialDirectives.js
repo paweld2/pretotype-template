@@ -1,6 +1,6 @@
 define([
         'angular',
-        "text!directive/template/dir/partials/menuDir.html"
+        "text!./menuDir.html"
     ],
     function(angular, menu_template) {
         'use strict';

@@ -5,7 +5,7 @@ define(
         'angular',
         'utils/Logger',
         'utils/CookieLenses',
-        'text!directive/template/dir/partials/cookiesEU.html'
+        'text!./cookiesEU.html'
     ],
     function(angular, logger, cookieLenses, cookies_te) {
         'use strict';

@@ -6,6 +6,7 @@
             'angular': '../vendor/angular/angular',
             'angular-mocks': '../vendor/angular-mocks/angular-mocks',
             'angular-ui-router': '../vendor/angular-ui-router/release/angular-ui-router',
+            'angular-breadcrumb': '../vendor/angular-breadcrumb/dist/angular-breadcrumb',
             'angular-resource': '../vendor/angular-resource/angular-resource',
             'angular-cookies': '../vendor/angular-cookies/angular-cookies',
             'angular-promise-tracker': '../vendor/angular-promise-tracker/promise-tracker',
@@ -22,6 +23,9 @@
                 exports: "angular"
             },
             "angular-ui-router": {
+                deps: ["angular"]
+            },
+            "angular-breadcrumb": {
                 deps: ["angular"]
             },
             "angular-mocks": {

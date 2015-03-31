@@ -2,11 +2,11 @@ define(
     [
         'capView/capViewRootLayout',
         'capabilities/auth/authorizationCapability',
-        "text!capView/stateTest/testContent.html",
-        "text!capView/stateTest/state1.html",
-        "text!capView/stateTest/state1.list.html",
-        "text!capView/stateTest/state2.html",
-        "text!capView/stateTest/state2.list.html"
+        "text!./testContent.html",
+        "text!./state1.html",
+        "text!./state1.list.html",
+        "text!./state2.html",
+        "text!./state2.list.html"
     ],
     function(rootLayout, authorization, content_te, st1_te, st1_list_te, st2_te, st2_list_te) {
         var accessLevels = authorization.securityModel.accessLevels;

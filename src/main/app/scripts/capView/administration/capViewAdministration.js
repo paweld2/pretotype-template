@@ -26,6 +26,9 @@ define(
             },
             data: {
                 access: accessLevels.admin
+            },
+            ncyBreadcrumb: {
+                label: 'Administracja'
             }
         };
         var adminMenu = {
@@ -39,6 +42,9 @@ define(
                 contentView: {
                     template: init_te
                 }
+            },
+            ncyBreadcrumb: {
+                label: 'Nawigacja',
             }
         };
         var studentsSubApp = {
@@ -63,6 +69,9 @@ define(
                 template: students_help_te,
                 data: {
                     access: accessLevels.onlyAdmins
+                },
+                ncyBreadcrumb: {
+                    label: 'Studenci'
                 }
             }, {
                 name: 'import',
@@ -70,6 +79,10 @@ define(
                 template: students_import_te,
                 data: {
                     access: accessLevels.onlyAdmins
+                },
+                ncyBreadcrumb: {
+                    label: 'Importowanie',
+                    parent: '^.help'
                 }
             }, {
                 name: 'edit',

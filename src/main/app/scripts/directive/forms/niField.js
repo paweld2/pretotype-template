@@ -1,8 +1,8 @@
 define([
         'angular',
-        "text!directive/template/dir/field/inputField.html",
-        "text!directive/template/dir/field/selectField.html",
-        "text!directive/template/dir/field/textareaField.html"
+        "text!./inputField.html",
+        "text!./selectField.html",
+        "text!./textareaField.html"
     ],
     function(angular, input_template, select_template, textarea_template) {
         'use strict';

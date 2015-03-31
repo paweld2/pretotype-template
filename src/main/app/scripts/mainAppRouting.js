@@ -2,6 +2,7 @@ define(
     [
         'utils/routingLoader',
         'capView/capViewRootLayout',
+        'capView/users/capViewUsers',
         'capView/auth/capViewAuth',
         'capView/crudTest/capViewCrudTest',
         'capView/administration/capViewAdministration',

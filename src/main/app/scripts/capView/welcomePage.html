@@ -5,6 +5,15 @@
     </h1>
     </div>
     <div>
+        <div ng-if="auth.isAdmin" class="col-md-6">
+            <a ui-sref="root.users" class="thumbnail">
+                <img holder-js data-src="holder.js/240x180/sky/text:Użytkownicy">
+
+                <div class="text-center caption">
+                    <h3>Użytkownicy</h3>
+                </div>
+            </a>
+        </div>
         <div class="col-md-6">
             <a ui-sref="root.appointment.new" class="thumbnail">
                 <img holder-js data-src="holder.js/240x180/sky/text:Tworzenie nowego powolania">

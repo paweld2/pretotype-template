@@ -1,7 +1,7 @@
 define([
         'underscore',
         'angular',
-        "text!directive/template/dir/field/arrayField.html"
+        "text!./arrayField.html"
     ],
     function(_, angular, templateHTML) {
         'use strict';
