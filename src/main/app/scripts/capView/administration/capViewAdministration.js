@@ -44,7 +44,7 @@ define(
                 }
             },
             ncyBreadcrumb: {
-                label: 'Nawigacja',
+                label: 'Administracja'
             }
         };
         var studentsSubApp = {
@@ -71,7 +71,8 @@ define(
                     access: accessLevels.onlyAdmins
                 },
                 ncyBreadcrumb: {
-                    label: 'Studenci'
+                    label: 'Studenci',
+                    parent: '^.^.menu'
                 }
             }, {
                 name: 'import',

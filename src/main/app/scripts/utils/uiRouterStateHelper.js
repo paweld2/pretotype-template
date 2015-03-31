@@ -30,7 +30,7 @@ define(['angular', 'angular-ui-router', 'utils/Logger'], function(angular, route
             if (!keepOriginalNames) {
                 fixStateName(state);
             }
-            var stateHeader = "Registering state ";
+            var stateHeader = "Registering          state ";
             if (state.abstract) {
                 stateHeader = "Registering abstract state ";
             }

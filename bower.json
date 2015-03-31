@@ -15,7 +15,7 @@
         "angular-mocks": "1.3.15",
         "angular-cookies": "1.3.15",
         "angular-ui-router": "0.2.13",
-        "angular-breadcrumb": "https://github.com/paweld2/angular-breadcrumb.git#cfe86aa43923a5aa21b409a9f9e4eaab6e2fb7fb",
+        "angular-breadcrumb": "https://github.com/paweld2/angular-breadcrumb.git#f76c018fd598ccec90896f547250b9756624e659",
         "ng-file-upload": "3.2.4",
         "angular-promise-tracker": "2.1.0",
         "angular-translate": "2.6.1",
