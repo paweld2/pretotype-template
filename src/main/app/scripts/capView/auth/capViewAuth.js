@@ -1,9 +1,10 @@
 define(
     [
         'capabilities/auth/authorizationCapability',
-        'text!./loginTe.html'
+        'text!./loginTe.html',
+        'text!./accessDeniedTe.html'
     ],
-    function(authorization, login_te) {
+    function(authorization, login_te, access_denied_te) {
         var accessLevels = authorization.securityModel.accessLevels;
 
         var loginState = {
@@ -16,9 +17,16 @@ define(
                 pageStyle: 'login-page'
             }
         };
+
+        var accessDeniedState = {
+            name: 'accessDenied',
+            url: "/accessDenied",
+            template: access_denied_te,
+            controller: authorization.loginController
+        };
         return {
             capViews: [
-                loginState
+                loginState, accessDeniedState
             ],
             dependencies: [authorization.name]
         };

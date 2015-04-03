@@ -10,17 +10,17 @@ define([
 
     function specificationRegistration(globalState, cookieCLen, api) {
         var sessionCLen = lenses.api.buildContextLen("app.sessions.{:sessionID}.(user,logged)");
-        var usersByUIDCLen = lenses.api.buildContextLen("app.users.{:uID}.(email,password,name,isActive,isAdmin)");
-        var userDTOCLen = lenses.api.buildContextLen("(uid,email,password,name,authorization.isActive,authorization.isAdmin)");
+        var usersByUIDCLen = lenses.api.buildContextLen("app.users.{:uID}.(email,password,name,isActive,roles)");
+        var userDTOCLen = lenses.api.buildContextLen("(uid,email,password,name,isActive,roles)");
         var loginLen = cookieCLen.bindContext(["appSessionKey"]);
         var userLoggedLen = cookieCLen.bindContext(["loggedUser"]);
         var state = globalState;
         state = sessionCLen.lset(undefined, state);
         state = usersByUIDCLen.lset(undefined, state);
         var users = [
-            ["u1", "admin@pmsoft.eu", "admin@pmsoft.eu", "administrator", true, true],
-            ["u2", "normal@pmsoft.eu", "normal@pmsoft.eu", "user", true, false],
-            ["u3", "inactive@pmsoft.eu", "inactive@pmsoft.eu", "inactive", false, false]
+            ["u1", "admin@pmsoft.eu", "admin@pmsoft.eu", "administrator", true, ['user', 'admin']],
+            ["u2", "normal@pmsoft.eu", "normal@pmsoft.eu", "user", true, ['user']],
+            ["u3", "inactive@pmsoft.eu", "inactive@pmsoft.eu", "inactive", true, ['user']]
         ];
         state = usersByUIDCLen.lset(users, state);
 

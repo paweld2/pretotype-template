@@ -1,6 +1,7 @@
 define(
     [
         'utils/mocksLoader',
+        'backend/usersSpecification',
         'backend/authorizationSpecification'
     ],
     function(mocksLoader) {

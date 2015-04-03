@@ -14,15 +14,24 @@ define(['underscore'], function(_) {
         onlyAdmins: userRoles.admin | userRoles.superAdmin, // 1100
         onlySuperAdmin: userRoles.superAdmin // 1000
     };
-    var buildUserRole = function(userAuthorization) {
-        var userAuth = userAuthorization || {};
-        if (userAuth.isAdmin) return userRoles.superAdmin;
-        if (userAuth.isCoordinator) return userRoles.admin;
-        if (userAuth.isActive) {
-            return userRoles.user;
-        } else {
-            return userRoles.public;
+    var buildUserRole = function(roles) {
+        if (_.isUndefined(roles)) {
+            return accessLevels.anon;
         }
+        return _.chain(roles).map(function(role) {
+            switch (role) {
+                case 'root':
+                    return userRoles.superAdmin;
+                case 'admin':
+                    return userRoles.admin;
+                case 'user':
+                    return userRoles.user;
+                default:
+                    return userRoles.public;
+            }
+        }).reduce(function(access, roleNr) {
+            return access | roleNr;
+        }, 0).value();
     };
 
     return {

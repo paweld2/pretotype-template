@@ -1,0 +1,13 @@
+<div class="col-md-9">
+    <h1>Wyszukiwanie użytkowników</h1>
+    <div>
+        <input type="text" ng-value="criteria.name" />
+        <pre>{{criteria || json}}</pre>
+    </div>
+    <div ng-show="control.loading.active()">
+        <p>Loading</p>
+    </div>
+    <div ng-show="!control.loading.active()">
+        <p>loaded</p>
+    </div>
+</div>

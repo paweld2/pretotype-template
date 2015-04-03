@@ -61,9 +61,9 @@ var MenuApi = function () {
     };
     var checkLoginStatus = function (isUserLogged) {
         return function () {
-            expect(loginLink().isPresent()).toBe(!isUserLogged);
-            expect(initLink().isPresent()).toBe(true);
-            expect(logoutLink().isPresent()).toBe(isUserLogged);
+            expect(loginLink().isDisplayed()).toBe(!isUserLogged);
+            expect(initLink().isDisplayed()).toBe(true);
+            expect(logoutLink().isDisplayed()).toBe(isUserLogged);
         };
     };
     this.checkIsNotLoggedMenu = checkLoginStatus(false);
@@ -105,6 +105,7 @@ var ApplicationApi = function () {
     };
     this.goToUrl = function (routingPath) {
         browser.get(appRootPath + "#/" + routingPath);
+        browser.waitForAngular();
     };
     this.go = function () {
         this.goToUrl("");
@@ -128,12 +129,9 @@ var ApplicationApi = function () {
     this.loginAction = function (email, password) {
         var loginPage = new LoginPage();
         var menu = new MenuApi();
-        menu.checkIsNotLoggedMenu();
         menu.goLogin();
         loginPage.isAppInThisPage();
         loginPage.actionLoginUserAccount(email, password);
-        this.checkInitState();
-        menu.checkIsLoggedMenu();
     };
 
 };

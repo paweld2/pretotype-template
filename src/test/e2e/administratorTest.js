@@ -12,12 +12,11 @@ describe('Application administrator - ', function () {
     });
     it('should be logged correctly', function () {
         menu.checkIsLoggedMenu();
-        menu.checkLoggedAsAdmin();
     });
-
-    var administrationPage = new api.page.administration();
-    it('should view Administration pages', function () {
-        menu.goAdministration();
-        administrationPage.isAppInThisPage();
-    });
+//
+//    var administrationPage = new api.page.administration();
+//    it('should view Administration pages', function () {
+//        menu.goAdministration();
+//        administrationPage.isAppInThisPage();
+//    });
 });

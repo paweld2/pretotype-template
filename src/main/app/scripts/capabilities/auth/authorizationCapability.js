@@ -43,40 +43,112 @@ define(
                 $httpProvider.interceptors.push(interceptor);
             }
         ]);
-        module.run([authorizationServiceName, function(authService) {
-            authService.validateSession();
+        module.factory('principal', ['$q', contractBackend.service, function($q, authBackend) {
+            var _identity,
+                _authenticated = false;
+            return {
+                isIdentityResolved: function() {
+                    return angular.isDefined(_identity);
+                },
+                isAuthenticated: function() {
+                    return _authenticated;
+                },
+                checkAccess: function(access) {
+                    var identifyAccess;
+                    if (!_authenticated) {
+                        identifyAccess = securityAccess.userRoles.public;
+                    } else {
+                        identifyAccess = _identity.access;
+                    }
+                    return identifyAccess & access;
+                },
+                isInRole: function(role) {
+                    if (!_authenticated || !_identity.roles) return false;
+                    return _identity.roles.indexOf(role) !== -1;
+                },
+                isInAnyRole: function(roles) {
+                    if (!_authenticated || !_identity.roles) return false;
+                    for (var i = 0; i < roles.length; i++) {
+                        if (this.isInRole(roles[i])) return true;
+                    }
+                    return false;
+                },
+                authenticate: function(identity) {
+                    _identity = identity;
+                    _authenticated = identity != null;
+                },
+                identity: function(force) {
+                    var deferred = $q.defer();
+
+                    if (force === true) {
+                        _identity = undefined;
+                        _authenticated = undefined;
+                    }
+
+                    if (angular.isDefined(_identity)) {
+                        deferred.resolve(_identity);
+                        return deferred.promise;
+                    }
+                    authBackend.userInfo.get(function(data) {
+                        logger.log("user info received - authenticated");
+                        _identity = data;
+                        _identity.access = securityAccess.buildUserRole(data.roles);
+                        _authenticated = true;
+                        deferred.resolve(_identity);
+                    }, function() {
+                        logger.log("user info empty - no authenticated");
+                        _identity = null;
+                        _authenticated = false;
+                        deferred.resolve(_identity);
+                    });
+                    return deferred.promise;
+                }
+            };
         }]);
-        module.factory(authorizationServiceName, [contractBackend.service, function(authBackend) {
+
+        module.factory(authorizationServiceName, ['$rootScope', '$state', 'principal', contractBackend.service, function($rootScope, $state, principal, authBackend) {
             var authService = {
+                authorize: function() {
+                    return principal.identity()
+                        .then(function() {
+                            var isAuthenticated = principal.isAuthenticated();
+
+                            logger.log("on authorize: " + isAuthenticated);
+
+                            if ($rootScope.toState.data && $rootScope.toState.data.access > 0 && !principal.checkAccess($rootScope.toState.data.access)) {
+                                if (isAuthenticated) $state.go('accessDenied'); // user is signed in but not authorized for desired state
+                                else {
+                                    // user is not authenticated. stow the state they wanted before you
+                                    // send them to the signin state, so you can return them when you're done
+                                    $rootScope.returnToState = $rootScope.toState;
+                                    $rootScope.returnToStateParams = $rootScope.toStateParams;
+
+                                    // now, send them to the login state so they can log in
+                                    $state.go('login');
+                                }
+                            }
+                        });
+                },
                 authenticate: function(user, successFunction, errorFunction) {
                     var l = new authBackend.login();
                     _.extend(l, user);
                     return l.$save(function(data) {
-                        authService.status.currentUser = data;
-                        authService.status.role = securityAccess.buildUserRole(data.authorization);
-                        if (angular.isFunction(successFunction)) {
-                            successFunction(data);
-                        }
+                        principal.identity(true).then(function() {
+                            if (angular.isFunction(successFunction)) {
+                                successFunction(data);
+                            }
+                        });
                     }, errorFunction);
                 },
-                logout: function(successLogoutFunction) {
-                    authService.status.currentUser = undefined;
-                    authService.status.role = securityAccess.buildUserRole({});
+                logout: function(successFunction) {
                     var logout = new authBackend.logout();
-                    if (angular.isFunction(successLogoutFunction)) {
-                        successLogoutFunction();
-                    }
-                    return logout.$save();
-                },
-                validateSession: function(successFunction) {
-                    return authBackend.userInfo.get(function(data) {
-                        authService.status.initializing = false;
-                        authService.status.currentUser = data;
-                        authService.status.role = securityAccess.buildUserRole(data.authorization);
-                        if (angular.isFunction(successFunction)) {
-                            successFunction(data);
-                        }
-                    }, closeSession);
+                    return logout.$save(function() {
+                        principal.identity(true).then(function() {
+                            if (angular.isFunction(successFunction)) {
+                                successFunction();
+                            }
+                        });
+                    });
                 },
                 status: {
                     initializing: true,
@@ -85,71 +157,46 @@ define(
                 }
             };
 
-            function closeSession() {
-                authService.status.currentUser = undefined;
-                authService.status.role = securityAccess.userRoles.public;
-            }
-
             return authService;
         }]);
 
-        module.controller(loginControllerName, ['$scope', '$state', authorizationServiceName, promiseTrackerMixin.asyncTrackingScope, function($scope, $state, authS, asyncTrackingScope) {
+        module.run(['$rootScope', '$state', '$stateParams', authorizationServiceName, 'principal',
+            function($rootScope, $state, $stateParams, authorization, principal) {
+                $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
+                    // track the state the user wants to go to; authorization service needs this
+                    $rootScope.toState = toState;
+                    $rootScope.toStateParams = toStateParams;
+                    // if the principal is resolved, do an authorization check immediately. otherwise,
+                    // it'll be done when the state it resolved.
+                    if (principal.isIdentityResolved()) authorization.authorize();
+                });
+            }
+        ]);
+
+        module.controller(loginControllerName, ['$rootScope', '$scope', '$state', authorizationServiceName, promiseTrackerMixin.asyncTrackingScope, function($rootScope, $scope, $state, authS, asyncTrackingScope) {
             asyncTrackingScope.asyncScope($scope);
             $scope.data = {};
             $scope.submit = function() {
                 $scope.error = false;
                 $scope.control.calling.addP(authS.authenticate($scope.data, function() {
-                    $state.go('root.app');
+                    if ($rootScope.returnToState) {
+                        $state.go($rootScope.returnToState, $rootScope.returnToStateParams);
+                    } else {
+                        $state.go('root.app');
+                    }
                 }, function() {
                     $scope.error = true;
                 }));
             };
         }]);
-        module.controller(authRootControllerName, ['$rootScope', '$scope', '$state', authorizationServiceName,
-            function($rootScope, $scope, $state, authS) {
+        module.controller(authRootControllerName, ['$rootScope', '$scope', '$state', 'principal', authorizationServiceName,
+            function($rootScope, $scope, $state, principal, authS) {
                 $scope.logout = function() {
                     return authS.logout(function() {
                         $state.go("root.app");
                     });
                 };
-
-                function checkRoleAndState(state, role) {
-                    if (!angular.isDefined(state.data) || !angular.isDefined(state.data.access)) {
-                        return true;
-                    }
-                    return state.data.access & role;
-                }
-
-                $scope.$watch(function() {
-                    return authS.status;
-                }, function(status) {
-                    $scope.auth = {
-                        initializing: status.initializing,
-                        isLogged: angular.isDefined(status.currentUser),
-                        session: status.currentUser
-                    };
-                    if (angular.isDefined(status.currentUser)) {
-                        _.extend($scope.auth, status.currentUser.authorization);
-                    }
-
-                    if (angular.isDefined(status.role)) {
-                        var allowed = checkRoleAndState($state.current, status.role);
-                        if (!allowed) {
-                            logger.log("Role changes and state not allowed. Going to init state");
-                            $state.go("root.app");
-                        }
-                    }
-                }, true);
-                $rootScope.$on('$stateChangeStart',
-                    function(event, toState, toParams, fromState, fromParams) {
-                        if (angular.isDefined(authS.status.role)) {
-                            var allowed = checkRoleAndState(toState, authS.status.role);
-                            if (!allowed) {
-                                logger.log("routing change not allowed, ignoring");
-                                event.preventDefault();
-                            }
-                        }
-                    });
+                $scope.principal = principal;
             }
         ]);
 

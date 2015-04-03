@@ -1,0 +1,47 @@
+<div class="col-md-9">
+    <h1>Prawa dostępu</h1>
+    <p>Dostęp do poszczególnych funkcjonalności wymaga posiadanie odpowiednich uprawnień.</p>
+    <hr/>
+    <h2>Widok dla listy użytkowników</h2>
+    <div>
+        <input type="text">
+    </div>
+    <div>
+        <button>Prev</button>
+        <button>Next</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Użytkownik</th>
+                <th>Uprawnienia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="i in [1,2,3,4,5]">
+                <td>XXX</td>
+                <td>
+                    <button>Aktywny</button>
+                    <button>Nauczyciel</button>
+                    <button>Administrator</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr/>
+    <h2>Wersja widoku dla jednego użytkownika</h2>
+    <div>
+        <div>Uprawnienia dla XXX.</div>
+        <div>
+            <ul>
+                <li>
+                    <button>ON/OFF</button> Aktywny: Wymagany do logowania się na stronie.</li>
+                <li>
+                    <button>ON/OFF</button> Nauczyciel: Dostęp do funkcji nauczycieli.</li>
+                <li>
+                    <button>ON/OFF</button> Administrator: Dostęp do funkcji administracji danych.</li>
+            </ul>
+        </div>
+    </div>
+</div>

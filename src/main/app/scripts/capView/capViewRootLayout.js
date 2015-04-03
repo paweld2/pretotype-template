@@ -11,6 +11,13 @@ define(
             name: 'root',
             template: rootLayout_te,
             abstract: true,
+            resolve: {
+                authorize: [authorization.authorizationService,
+                    function(authorization) {
+                        return authorization.authorize();
+                    }
+                ]
+            },
             controller: capabilities.rootController,
             children: [{
                 name: 'app',
@@ -24,7 +31,7 @@ define(
                     access: accessLevels.public
                 },
                 ncyBreadcrumb: {
-                    label: 'Start'
+                    label: 'Pulpit'
                 }
             }]
         };

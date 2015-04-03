@@ -5,8 +5,8 @@
     </h1>
     </div>
     <div>
-        <div ng-if="auth.isAdmin" class="col-md-6">
-            <a ui-sref="root.users" class="thumbnail">
+        <div ng-if="principal.isInRole('admin')" class="col-md-6">
+            <a ui-sref="root.users.init" class="thumbnail">
                 <img holder-js data-src="holder.js/240x180/sky/text:Użytkownicy">
 
                 <div class="text-center caption">
@@ -15,7 +15,7 @@
             </a>
         </div>
         <div class="col-md-6">
-            <a ui-sref="root.students" class="thumbnail">
+            <a ui-sref="root.students.init" class="thumbnail">
                 <img holder-js data-src="holder.js/240x180/sky/text:Uczniowie">
 
                 <div class="text-center caption">
@@ -33,10 +33,10 @@
             </a>
         </div>
         <div ng-if="auth.isAdmin" class="col-md-6">
-            <a ui-sref="root.administration.menu" class="thumbnail">
-                <img holder-js data-src="holder.js/240x180/sky/text:Zarządzenia">
+            <a ui-sref="root.administration.init" class="thumbnail">
+                <img holder-js data-src="holder.js/240x180/sky/text:Zarządzanie">
                 <div class="text-center caption">
-                    <h3>Zarządzenia</h3>
+                    <h3>Zarządzanie</h3>
                 </div>
             </a>
         </div>

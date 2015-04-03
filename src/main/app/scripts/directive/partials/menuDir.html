@@ -11,8 +11,8 @@
         <div class="collapse navbar-collapse" id="menu-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active"><a ui-sref="root.app">Pulpit</a></li>
-                <li class="userActions" ng-if="!auth.isLogged"><a ui-sref="login">Logowanie</a></li>
-                <li class="userActions" ng-if="auth.isLogged"><a href="" ng-click="logout()">Wyloguj</a></li>
+                <li class="userActions" ng-hide="principal.isAuthenticated()"><a ui-sref="login">Logowanie</a></li>
+                <li class="userActions" ng-show="principal.isAuthenticated()"><a href="" ng-click="logout()">Wyloguj</a></li>
             </ul>
         </div>
     </div>

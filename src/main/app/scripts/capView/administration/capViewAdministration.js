@@ -6,12 +6,11 @@ define(
         'text!./mainTe.html',
         'text!./menuPa.html',
         'text!./init.html',
-        'text!./students_help.html',
-        'text!./students_edition.html',
-        'text!./students_upgrade.html',
-        'text!./students_import.html'
+        'text!./adminLogin.html',
+        'text!./adminErrors.html',
+        'text!./adminStatistics.html',
     ],
-    function(rootLayout, authorization, administrationCapability, main_te, menuPa, init_te, students_help_te, students_edition_te, students_upgrade_te, students_import_te) {
+    function(rootLayout, authorization, administrationCapability, mainTe, menuPa, initTe, adminLoginTe, adminErrorsTe, adminStatisticsTe) {
         var accessLevels = authorization.securityModel.accessLevels;
 
         var adminSubApp = {
@@ -21,88 +20,92 @@ define(
             url: "/administration",
             views: {
                 rootLayoutContent: {
-                    template: main_te
+                    template: mainTe
                 }
             },
             data: {
                 access: accessLevels.admin
             },
             ncyBreadcrumb: {
-                label: 'Administracja',
                 parent: rootLayout.ncyBreadcrumbParent
             }
         };
         var adminMenu = {
-            name: 'menu',
-            url: '/menu',
+            name: 'init',
+            url: '/init',
             parent: adminSubApp,
             views: {
                 menuView: {
                     template: menuPa
                 },
                 contentView: {
-                    template: init_te
+                    template: initTe
                 }
             },
             ncyBreadcrumb: {
-                label: 'Administracja'
+                label: 'Zarządzanie'
             }
         };
-        var studentsSubApp = {
-            name: 'students',
-            url: '/students',
-            abstract: true,
-            parent: adminSubApp,
-            views: {
-                menuView: {
-                    template: menuPa
+        adminSubApp.children = [{
+                name: 'login',
+                url: '/login',
+                views: {
+                    menuView: {
+                        template: menuPa
+                    },
+                    contentView: {
+                        template: adminLoginTe
+                    }
                 },
-                contentView: {
-                    template: '<div ui-view></div>'
-                },
-                data: {
-                    access: accessLevels.onlyAdmins
-                }
-            },
-            children: [{
-                name: 'help',
-                url: '/',
-                template: students_help_te,
                 data: {
                     access: accessLevels.onlyAdmins
                 },
                 ncyBreadcrumb: {
-                    label: 'Studenci',
-                    parent: '^.^.menu'
+                    label: 'Logowania',
+                    parent: '^.init'
                 }
             }, {
-                name: 'import',
-                url: '/import',
-                template: students_import_te,
+                name: 'errors',
+                url: '/errors',
+                views: {
+                    menuView: {
+                        template: menuPa
+                    },
+                    contentView: {
+                        template: adminErrorsTe
+                    }
+                },
                 data: {
                     access: accessLevels.onlyAdmins
                 },
                 ncyBreadcrumb: {
-                    label: 'Importowanie',
-                    parent: '^.help'
+                    label: 'Błędy',
+                    parent: '^.init'
                 }
             }, {
-                name: 'edit',
-                url: '/edit',
-                controller: administrationCapability.studentsEditionController,
-                template: students_edition_te
-            }, {
-                name: 'upgrade',
-                url: '/upgrade',
-                template: students_upgrade_te,
+                name: 'statistics',
+                url: '/statistics',
+                views: {
+                    menuView: {
+                        template: menuPa
+                    },
+                    contentView: {
+                        template: adminStatisticsTe
+                    }
+                },
                 data: {
                     access: accessLevels.onlyAdmins
+                },
+                ncyBreadcrumb: {
+                    label: 'Statystyki',
+                    parent: '^.init'
                 }
-            }]
-        };
+            }
+
+        ];
         return {
             capViews: [
-                adminSubApp, adminMenu, studentsSubApp
+                adminSubApp, adminMenu
             ],
             dependencies: [authorization.name, administrationCapability.name]
         };
