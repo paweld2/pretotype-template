@@ -179,6 +179,7 @@ module.exports = function (grunt) {
             devserver: {
                 options: {
                     port: 8001,
+                    hostname: '*',
                     base: ['bower_dependencies','src/main/app'],
                     directory: 'src/main/app',
                     livereload: true

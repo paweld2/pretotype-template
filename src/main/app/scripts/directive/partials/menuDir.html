@@ -10,9 +10,23 @@
         </div>
         <div class="collapse navbar-collapse" id="menu-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li ui-sref-active="active"><a ui-sref="root.app">Pulpit</a></li>
-                <li class="userActions" ng-hide="principal.isAuthenticated()"><a ui-sref="login">Logowanie</a></li>
-                <li class="userActions" ng-show="principal.isAuthenticated()"><a href="" ng-click="logout()">Wyloguj</a></li>
+                <li ui-sref-active="active"><a ui-sref="root.about">About</a></li>
+                <li ui-sref-active="active"><a ui-sref="root.mission">Our mission</a></li>
+                <li ui-sref-active="active"><a ui-sref="root.service">Service</a></li>
+                <li ui-sref-active="active"><a ui-sref="root.team">Team</a></li>
+                <li ui-sref-active="active"><a ui-sref="root.portfolio">Portfolio</a></li>
+                <!--<li ui-sref-active="active"><a ui-sref="root.work">Join us</a></li>-->
+                <!--<li ui-sref-active="active"><a ui-sref="root.blog">Blog</a></li>-->
+                <li ui-sref-active="active"><a ui-sref="root.contact">Contact</a></li>
+                <!--<li class="userActions" ng-hide="principal.isAuthenticated()"><a ui-sref="login">Logowanie</a></li>-->
+                <!--<li class="userActions" ng-show="principal.isAuthenticated()"><a href="" ng-click="logout()">Wyloguj</a></li>-->
+                <li>
+                    <p class="navbar-text">
+                        <a ng-click="translate('pl')" ui-sref="root.app">pl</a> |
+                        <a ng-click="translate('en')" ui-sref="root.app">en</a> |
+                        <a ng-click="translate('ja')" ui-sref="root.app">ja</a>
+                    </p>
+                </li>
             </ul>
         </div>
     </div>

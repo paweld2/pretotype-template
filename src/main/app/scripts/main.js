@@ -4,12 +4,15 @@
         paths: {
             'eelnss': '../vendor/eelnss/eelnss',
             'angular': '../vendor/angular/angular',
+            'angular-sanitize': '../vendor/angular-sanitize/angular-sanitize',
             'angular-mocks': '../vendor/angular-mocks/angular-mocks',
             'angular-ui-router': '../vendor/angular-ui-router/release/angular-ui-router',
             'angular-breadcrumb': '../vendor/angular-breadcrumb/dist/angular-breadcrumb',
             'angular-resource': '../vendor/angular-resource/angular-resource',
             'angular-cookies': '../vendor/angular-cookies/angular-cookies',
             'angular-promise-tracker': '../vendor/angular-promise-tracker/promise-tracker',
+            'angular-translate': '../vendor/angular-translate/angular-translate',
+            'angular-translate-storage-cookie': '../vendor/angular-translate-storage-cookie/angular-translate-storage-cookie',
             'text': '../vendor/requirejs-text/text',
             'requireLib': '../vendor/requirejs/require',
             'underscore': '../vendor/underscore/underscore',
@@ -38,6 +41,12 @@
                 deps: ["angular"]
             },
             "angular-promise-tracker": {
+                deps: ["angular"]
+            },
+            "angular-translate": {
+                deps: ["angular"]
+            },
+            "angular-sanitize": {
                 deps: ["angular"]
             },
             "eelnss": {

@@ -1,6 +1,6 @@
 define(
     [
-        'capView/capViewRootLayout',
+        'scripts/capView/capViewRootLayout',
         'capabilities/auth/authorizationCapability',
         'capabilities/administration/administrationCapability',
         'text!./mainTe.html',

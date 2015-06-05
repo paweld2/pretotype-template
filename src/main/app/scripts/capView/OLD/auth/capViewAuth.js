@@ -1,6 +1,6 @@
 define(
     [
-        'capabilities/auth/authorizationCapability',
+        'scripts/capabilities/auth/authorizationCapability',
         'text!./loginTe.html',
         'text!./accessDeniedTe.html'
     ],

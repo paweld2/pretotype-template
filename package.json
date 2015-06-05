@@ -30,6 +30,7 @@
         "karma-chrome-launcher": "0.1.7",
         "karma-firefox-launcher": "0.1.4",
         "karma-phantomjs-launcher": "0.1.4",
-        "karma": "0.12.31"
+        "karma": "0.12.31",
+        "wintersmith": "2.2.0"
     }
 }

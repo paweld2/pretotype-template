@@ -4,15 +4,15 @@ define(
         'capabilities/auth/authorizationCapability',
         "text!./mainView.html"
     ],
-    function(rootLayout, authorization, mainView) {
+    function (rootLayout, authorization, mainView) {
         var accessLevels = authorization.securityModel.accessLevels;
 
         var states = [{
-            name: 'appointment',
-            url: "/appointment",
+            name: 'about',
+            url: "/about",
             parent: rootLayout.rootState,
             ncyBreadcrumb: {
-                label: 'Powołania',
+                label: 'About',
                 parent: rootLayout.ncyBreadcrumbParent
             },
             views: {
@@ -20,18 +20,7 @@ define(
                     template: mainView
                 }
             },
-            access: accessLevels.admin,
-            children: [{
-                name: "list",
-                url: "/list",
-                template: "test",
-                controller: ['$scope', function($scope) {
-                    $scope.items = ["A", "List", "Of", "Items"];
-                }],
-                data: {
-                    access: accessLevels.admin,
-                }
-            }]
+            access: accessLevels.public
         }];
 
         return {

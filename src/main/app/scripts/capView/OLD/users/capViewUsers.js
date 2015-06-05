@@ -1,7 +1,7 @@
 define(
     [
         '../capViewRootLayout',
-        'capabilities/users/usersAdminCapability',
+        'scripts/capabilities/users/usersAdminCapability',
         'capabilities/auth/authorizationCapability',
         "text!./mainView.html",
         "text!./usersMenu.html",

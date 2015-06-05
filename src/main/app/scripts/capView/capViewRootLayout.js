@@ -1,7 +1,7 @@
 define(
     [
         'capabilities/auth/authorizationCapability',
-        'capabilities/controllersModule',
+        'capabilities/rootControllersModule',
         'text!capView/rootLayoutTe.html',
         'text!capView/welcomePage.html'
     ],

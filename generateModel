@@ -1,0 +1,106 @@
+#!/usr/bin/env node
+
+var wintersmith = require('wintersmith');
+var _s = require('underscore.string');
+var fs = require('fs');
+
+// create the sites environment, can also be called with a config object. e.g.
+// {contents: '/some/contents', locals: {powerLevel: 10}}, ..}
+var env = wintersmith('config.json');
+
+// do something with the content tree
+env.load(function(error, result) {
+  if (error) throw error;
+  console.log('Contents loaded!');
+  var model = buildJson(result);
+  // console.log(model);
+  var requireModule = "define([], function () { \n return " + model + ";});";
+
+    fs.writeFile("./src/main/app/scripts/model.js", requireModule, function(err) {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log("The file was saved!");
+        }
+    });
+    fs.writeFile("./src/main/app/scripts/model.json", model, function(err) {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log("The file was saved!");
+        }
+    });
+});
+
+function buildJson(result) {
+    var cache = [];
+    var jsonResult = JSON.stringify(result, function(key, value) {
+        if( key.substr(0,2) === '__' ) {
+            return;
+        }
+        if( key === 'parent') {
+           return;
+        }
+
+        if( key === 'service') {
+           return buildArrayForInternal(value);
+        }
+        if( key === 'partner') {
+           return buildArrayForFiles(value);
+        }
+        if( key === 'filepath') {
+           return value.relative;
+        }
+        if( _s.endsWith(key, '_md')) {
+           return value.filepath.relative.replace(/\\/g,"/");
+        }
+        if( _s.endsWith(key, '_json')) {
+           return value.metadata;
+        }
+        if (typeof value === 'object' && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+                // Circular reference found, discard key
+                return;
+            }
+            // Store value in our collection
+            cache.push(value);
+            return normalizeKeys(value);
+        }
+        return value;
+    });
+    cache = null; // Enable garbage collection
+    return jsonResult;
+}
+
+function normalizeKeys(obj) {
+    var normal = {};
+    for( s in obj ) {
+        var normalKey = s.replace(/\.md/g,'_md');
+        normalKey = normalKey.replace(/\.json/g,'_json');
+        normal[normalKey] = obj[s];
+    }
+    return normal;
+}
+
+function buildArrayForInternal(obj) {
+  var arrayEncode = Array(9);
+  var indexID = 1;
+  for( s in obj ) {
+    var ref = obj[s];
+    ref.ref = s;
+    ref.sid = parseInt(s.substr(1,1),10);
+    arrayEncode[ref.sid-1] = ref;
+  }
+  return arrayEncode;
+}
+
+function buildArrayForFiles(obj) {
+  var arrayEncode = Array();
+  for( s in obj ) {
+    var fileRef = {};
+    fileRef.ref = s;
+    fileRef.url = obj[s].url;
+    arrayEncode.push(fileRef);
+  }
+  return arrayEncode;
+}

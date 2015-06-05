@@ -1,44 +1,29 @@
 <div class="col-md-12">
-    <div class="page-header">
-        <h1>Powoływać
-      <small>zarządzanie powołań.</small>
-    </h1>
-    </div>
-    <div>
-        <div ng-if="principal.isInRole('admin')" class="col-md-6">
-            <a ui-sref="root.users.init" class="thumbnail">
-                <img holder-js data-src="holder.js/240x180/sky/text:Użytkownicy">
+    <div class="row">
+        <div class="col-md-8">
 
-                <div class="text-center caption">
-                    <h3>Użytkownicy</h3>
+            <div>
+                <div class="jumbotron">
+                    <h1 translate>MAIN.COMPANY_NAME</h1>
+                    <p><img holder-js data-src="holder.js/600x200/auto/#777:#555/text:Duze logo"></p>
+                    <h2>Realize Your full potential.</h2>
                 </div>
-            </a>
-        </div>
-        <div class="col-md-6">
-            <a ui-sref="root.students.init" class="thumbnail">
-                <img holder-js data-src="holder.js/240x180/sky/text:Uczniowie">
+            </div>
 
-                <div class="text-center caption">
-                    <h3>Uczniowie</h3>
-                </div>
-            </a>
         </div>
-        <div class="col-md-6">
-            <a ui-sref="root.appointment" class="thumbnail">
-                <img holder-js data-src="holder.js/240x180/sky/text:Powołania">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title" translate>MAIN.BE_ABLE</h3>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item"><a ui-sref="root.service" translate>MAIN.ABLE_CORE_DOMAIN</a></li>
+                    <li class="list-group-item"><a ui-sref="root.service" translate>MAIN.ABLE_BACKEND</a></li>
+                    <li class="list-group-item"><a ui-sref="root.service" translate>MAIN.ABLE_INTERFACES</a></li>
+                    <li class="list-group-item"><a ui-sref="root.service" translate>MAIN.ABLE_TESTS</a></li>
+                </ul>
+            </div>
 
-                <div class="text-center caption">
-                    <h3>Powołania</h3>
-                </div>
-            </a>
-        </div>
-        <div ng-if="auth.isAdmin" class="col-md-6">
-            <a ui-sref="root.administration.init" class="thumbnail">
-                <img holder-js data-src="holder.js/240x180/sky/text:Zarządzanie">
-                <div class="text-center caption">
-                    <h3>Zarządzanie</h3>
-                </div>
-            </a>
         </div>
     </div>
 
