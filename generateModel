@@ -52,7 +52,7 @@ function buildJson(result) {
            return value.relative;
         }
         if( _s.endsWith(key, '_md')) {
-           return value.filepath.relative.replace(/\\/g,"/");
+           return "/" + value.filepath.relative.replace(/\\/g,"/");
         }
         if( _s.endsWith(key, '_json')) {
            return value.metadata;

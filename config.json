@@ -1,4 +1,4 @@
 {
-    "contents": "./content",
+    "contents": "./src/main/content",
     "templates": "./src/main/app"
 }

@@ -77,9 +77,9 @@ define([
             var globalState = {};
 
             var module = angular.module(moduleName, ['ngMockE2E', cookieLenses.name]);
-            module.config(['$provide', function($provide) {
-                $provide.decorator('$httpBackend', angular.mock.e2e.$httpBackendDecorator);
-            }]);
+//            module.config(['$provide', function($provide) {
+//                $provide.decorator('$httpBackend', angular.mock.e2e.$httpBackendDecorator);
+//            }]);
             if (has('delayFakeBackend')) {
                 setupDelayedProxyOnMocks(module);
             }
@@ -94,6 +94,9 @@ define([
                     registerCallback.apply({}, [globalState, cookieCLen, api]);
                 }
                 _.each(listOfBackendSpecifications, _registerBackendSpecificationOnRuntime);
+                $httpBackend.whenGET(/\/en.*/).passThrough();
+                $httpBackend.whenGET(/\/ja.*/).passThrough();;
+                $httpBackend.whenGET("/en/data/about.md").passThrough();
             }]);
             return {
                 m: module,

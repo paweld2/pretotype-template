@@ -1,11 +1,2 @@
-define([], function () {
-    return {
-        "locals": {},
-        "contents": {
-            "en": {"translate_json": {"MAIN": {"COMPANY_NAME": "Saklrzz EN"}}},
-            "ja": {"translate_json": {"MAIN": {"COMPANY_NAME": "Saklrzz"}}},
-            "pl": {"translate_json": {"MAIN": {"COMPANY_NAME": "Saklrzz PL"}}}
-        },
-        "templates": {}
-    };
-});
+define([], function () { 
+ return {"locals":{},"templates":{},"contents":{"ja":{"translate_json":{"MAIN":{"COMPANY_NAME":"Saklrzz"}}},"pl":{"translate_json":{"MAIN":{"COMPANY_NAME":"Saklrzz"}}},"en":{"translate_json":{"MAIN":{"COMPANY_NAME":"Saklrzz","MOTTO":"Realize Your full potential.","BE_ABLE":"Be able to:","ABLE_CORE_DOMAIN":"Evolve Your core domain design.","ABLE_BACKEND":"Exploit scalable backend service.","ABLE_INTERFACES":"Provide fully functional user interfaces.","ABLE_TESTS":"Trust the quality of Your service."},"ABOUT":{}},"data":{"about_md":"/en/data/about.md"}}}};});

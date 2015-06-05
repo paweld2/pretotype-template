@@ -170,7 +170,7 @@ module.exports = function (grunt) {
             debugserver: {
                 options: {
                     port: 8001,
-                    base: ['bower_dependencies','src/main/app'],
+                    base: ['bower_dependencies','src/main/app','src/main/content'],
                     directory: 'src/main/app',
                     debug:true,
                     keepalive:true
@@ -180,7 +180,7 @@ module.exports = function (grunt) {
                 options: {
                     port: 8001,
                     hostname: '*',
-                    base: ['bower_dependencies','src/main/app'],
+                    base: ['bower_dependencies','src/main/app','src/main/content'],
                     directory: 'src/main/app',
                     livereload: true
                 }
