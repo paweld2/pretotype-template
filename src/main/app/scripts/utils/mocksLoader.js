@@ -94,9 +94,12 @@ define([
                     registerCallback.apply({}, [globalState, cookieCLen, api]);
                 }
                 _.each(listOfBackendSpecifications, _registerBackendSpecificationOnRuntime);
-                $httpBackend.whenGET(/\/en.*/).passThrough();
-                $httpBackend.whenGET(/\/ja.*/).passThrough();;
-                $httpBackend.whenGET("/en/data/about.md").passThrough();
+                $httpBackend.whenGET(/\/en\/.*/).passThrough();
+                $httpBackend.whenGET(/\/pl\/.*/).passThrough();
+                $httpBackend.whenGET(/\/ja\/.*/).passThrough();
+//                $httpBackend.whenGET("/en/data/about.md").passThrough();
+//                $httpBackend.whenGET("/en/data/service/coredomain/description.md").passThrough();
+//                $httpBackend.whenGET(/^\/en.*/).passThrough();
             }]);
             return {
                 m: module,

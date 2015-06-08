@@ -6535,92 +6535,67 @@ html {
   height: 100%;
   min-height: 100%;
 }
-body {
-  margin-top: 90px;
-}
 .app-dir-menu a.logowrapper {
   padding: 0px;
   margin: 0px;
 }
-.cookie-eu-policy-message {
-  position: fixed;
-  bottom: 0px;
-  width: 100%;
-  background-color: #00478a;
-  color: white;
-  z-index: 1051;
+.mainWrapper {
+  background-color: red;
+  padding-top: 60px;
 }
-body.login-page {
-  margin: 0px;
-  min-height: 100%;
-  height: 100%;
-  overflow: hidden;
-  background-image: -webkit-linear-gradient(#f2f2f2, white 50%, #bdccd4);
-  background-image: -o-linear-gradient(#f2f2f2, white 50%, #bdccd4);
-  background-image: linear-gradient(#f2f2f2, white 50%, #bdccd4);
+.welcome-page {
+  background-image: url(/assets/15092861213_6e38e11f34_k.jpg);
   background-repeat: no-repeat;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff2f2f2', endColorstr='#ffbdccd4', GradientType=0);
+  background-size: cover;
+  color: white;
+  padding-top: 200px;
+  height: 300px;
 }
-.loginPage {
-  overflow: auto;
-  overflow-y: scroll;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1050;
-  -webkit-overflow-scrolling: touch;
-  outline: 0;
-  display: block;
+.welcome-page .motto {
+  padding: 5px 40px;
+  background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient(30deg, #00416d, #28a8de);
+  background-image: -o-linear-gradient(30deg, #00416d, #28a8de);
+  background-image: linear-gradient(30deg, #00416d, #28a8de);
 }
-.loginPage .formContainer {
-  width: 500px;
-  margin: 30px auto;
+.welcome-page .capabilities {
+  padding: 30px 40px;
+  background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient(45deg, #f15a24, #f7911e);
+  background-image: -o-linear-gradient(45deg, #f15a24, #f7911e);
+  background-image: linear-gradient(45deg, #f15a24, #f7911e);
 }
-.loginPage .loginHeader {
-  position: relative;
-  width: auto;
-  margin: 10px;
-  text-align: center;
+.welcome-page .capabilities ul {
+  padding-left: 10px;
 }
-.loginPage .loginWindow {
-  position: relative;
-  width: auto;
-  margin: 30px;
-  background-color: #00478a;
-  padding: 30px 20px 15px 140px;
-  border-radius: 20px;
-  box-shadow: 0px 9px 21px -5px rgba(28, 28, 28, 0.69);
-}
-.loginPage .loginWindow .brand-logo {
-  position: absolute;
-  left: 20px;
-  top: 30px;
-}
-.loginPage .loginWindow .control-label,
-.loginPage .loginWindow .has-error .help-block,
-.loginPage .loginWindow .help-block,
-.loginPage .loginWindow .text-info {
+.welcome-page .capabilities li a {
   color: white;
 }
-.loginPage .loginFooter {
-  position: relative;
-  width: auto;
-  margin: 10px;
+/* Small devices (tablets, 768px and up) .... landscape  */
+@media (min-width: 768px) and (min-aspect-ratio: 13/9) {
+  .welcome-page {
+    padding-top: 200px;
+    height: 400px;
+  }
 }
-.loginPage .loginFooter .icon {
-  display: inline;
+/* Small devices (tablets, 768px and up) .... portrait  */
+@media (min-width: 768px) and (max-aspect-ratio: 13/9) {
+  .welcome-page {
+    padding-top: 350px;
+    height: 550px;
+  }
 }
-.sortUp .upArrow {
-  color: red;
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .welcome-page {
+    padding-top: 300px;
+    height: 450px;
+  }
 }
-.sortUp .downArrow {
-  color: blue;
-}
-.sortDown .upArrow {
-  color: blue;
-}
-.sortDown .downArrow {
-  color: red;
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .welcome-page {
+    padding-top: 500px;
+    height: 700px;
+  }
 }

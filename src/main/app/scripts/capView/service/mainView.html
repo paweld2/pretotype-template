@@ -1,17 +1,11 @@
 <div class="col-md-12">
     <!--<div ui-view></div>-->
-
     <div class="media">
         <div class="media-left">
             <img holder-js data-src="holder.js/70x70/auto/#777:#555/text:Ikonka">
         </div>
         <div class="media-body">
-            <h4 class="media-heading" id="coredomain">Core domain design</h4>
-
-            <p>For domain driven projects, we provide mature modeling capabilities and experience to enable core domain
-                design and refactoring. As part of our innovation program we explore the event sourcing paradigm to
-                build distilled core domain representations. For details see <a href="http://eventsourcingddd.com">event
-                    sourcing DDD</a></p>
+            <div marked ng-include="data.service.coredomain.description_md"></div>
         </div>
     </div>
 
@@ -20,13 +14,7 @@
             <img holder-js data-src="holder.js/70x70/auto/#777:#555/text:Ikonka">
         </div>
         <div class="media-body">
-            <h4 class="media-heading" id="backend">Backend development and cloud deploy
-                <a class="anchorjs-link" href="#backend"><span class="anchorjs-icon"></span></a>
-            </h4>
-
-            <p>Practice prove that the best solution is the one that can be easily substitute. We implement scalable
-                backend services. Our approach is focused on production of easy to migrate solutions for all the product
-                live cycle stages.</p>
+            <div marked ng-include="data.service.backend.description_md"></div>
         </div>
     </div>
     <div class="media">
@@ -34,12 +22,7 @@
             <img holder-js data-src="holder.js/70x70/auto/#777:#555/text:Ikonka">
         </div>
         <div class="media-body">
-            <h4 class="media-heading" id="webapp">Web applications</h4>
-
-            <p>Frontend development requires structured and systematic development to handle complexity. Our approach to
-                user interfaces is guide development by integration test and archive 100% functionality coverage. To
-                make frontend development independent of backend implementation, we use fully functional backend
-                mocks.</p>
+            <div marked ng-include="data.service.webapp.description_md"></div>
         </div>
     </div>
 
@@ -48,12 +31,10 @@
             <img holder-js data-src="holder.js/70x70/auto/#777:#555/text:Ikonka">
         </div>
         <div class="media-body">
-            <h4 class="media-heading" id="testautomation">Test automation</h4>
-
-            <p>Full coverage requires generation of all possible combination of system interactions and validation of
-                state history. We support our test case generation on scalacheck library to provide a exhaustive
-                coverage.</p>
+            <div marked ng-include="data.service.testautomation.description_md"></div>
         </div>
     </div>
-
+<pre>
+    {{data | json }}
+</pre>
 </div>

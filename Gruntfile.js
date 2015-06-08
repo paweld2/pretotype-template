@@ -65,23 +65,23 @@ module.exports = function (grunt) {
             fonts: {
                 expand: true,
                 flatten: true,
-                src: ["app/scripts/vendor/bootstrap/fonts/*"],
+                src: ["src/main/app/scripts/vendor/bootstrap/fonts/*"],
                 dest: 'dist/fonts/'
             },
             assets: {
                 expand: true,
                 flatten: true,
-                src: ["app/assets/*"],
+                src: ["src/main/app/assets/*"],
                 dest: 'dist/assets/'
             },
             fonts_dev: {
                 expand: true,
                 flatten: true,
-                src: ["app/scripts/vendor/bootstrap/fonts/*"],
+                src: ["src/main/app/scripts/vendor/bootstrap/fonts/*"],
                 dest: 'app/fonts/'
             },
             html: {
-                src: ["app/appBin.html"],
+                src: ["src/main/app/appBin.html"],
                 dest: 'dist/index.html'
             }
         },
@@ -95,14 +95,14 @@ module.exports = function (grunt) {
                 tasks: ['jshint:test']
             },
             less: {
-                files: ['app/less/*.less'],
+                files: ['src/main/less/*.less'],
                 tasks: ['less:bootstrap_dev', 'less:theme_dev'],
                 options: {
                     livereload: true
                 }
             },
             templates: {
-                files: ['app/scripts/**/*.html'],
+                files: ['src/main/app/scripts/**/*.html'],
                 options: {
                     livereload: true
                 }
@@ -115,7 +115,7 @@ module.exports = function (grunt) {
         requirejs: {
             compile: {
                 options: {
-                    baseUrl: "app/scripts",
+                    baseUrl: "src/main/app/scripts",
                     name: "main",
                     out: 'dist/app_bin.js',
                     include: ["requireLib"],
