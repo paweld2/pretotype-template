@@ -8,10 +8,10 @@ module.exports = function (grunt) {
         // Metadata.
         pkg: grunt.file.readJSON('package.json'),
         banner: '/*!\n' +
-            ' * Pretotype template v<%= pkg.version %> by Paweł Cesar Sanjuan Szklarz @PSanjuanSzklarz \n' +
-            ' * Copyright <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-            ' * Licensed under <%= _.pluck(pkg.licenses, "url").join(", ") %>\n' +
-            ' */\n\n',
+        ' * Pretotype template v<%= pkg.version %> by Paweł Cesar Sanjuan Szklarz @PSanjuanSzklarz \n' +
+        ' * Copyright <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+        ' * Licensed under <%= _.pluck(pkg.licenses, "url").join(", ") %>\n' +
+        ' */\n\n',
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
@@ -23,7 +23,7 @@ module.exports = function (grunt) {
                 src: ['src/main/app/scripts/*.js', 'src/main/app/scripts/**/*.js']
             },
             test: {
-                src: ['src/test/unit/*.js','src/test/unit/**/*.js']
+                src: ['src/test/unit/*.js', 'src/test/unit/**/*.js']
             }
         },
 
@@ -65,8 +65,14 @@ module.exports = function (grunt) {
             fonts: {
                 expand: true,
                 flatten: true,
-                src: ["src/main/app/scripts/vendor/bootstrap/fonts/*"],
+                src: ["bower_dependencies/vendor/bootstrap/fonts/*"],
                 dest: 'dist/fonts/'
+            },
+            content: {
+                cwd: 'src/main/content/',
+                expand: true,
+                src: '**',
+                dest: 'dist/'
             },
             assets: {
                 expand: true,
@@ -77,8 +83,8 @@ module.exports = function (grunt) {
             fonts_dev: {
                 expand: true,
                 flatten: true,
-                src: ["src/main/app/scripts/vendor/bootstrap/fonts/*"],
-                dest: 'app/fonts/'
+                src: ["bower_dependencies/vendor/bootstrap/fonts/*"],
+                dest: 'src/main/app/fonts/'
             },
             html: {
                 src: ["src/main/app/appBin.html"],
@@ -120,7 +126,24 @@ module.exports = function (grunt) {
                     out: 'dist/app_bin.js',
                     include: ["requireLib"],
                     paths: {
-                        requireLib: 'bower_dependencies/vendor/requirejs/require'
+                        'requireLib': '../../../../bower_dependencies/vendor/requirejs/require',
+                        'eelnss': '../../../../bower_dependencies/vendor/eelnss/eelnss',
+                        'angular': '../../../../bower_dependencies/vendor/angular/angular',
+                        'angular-sanitize': '../../../../bower_dependencies/vendor/angular-sanitize/angular-sanitize',
+                        'angular-mocks': '../../../../bower_dependencies/vendor/angular-mocks/angular-mocks',
+                        'angular-ui-router': '../../../../bower_dependencies/vendor/angular-ui-router/release/angular-ui-router',
+                        'angular-breadcrumb': '../../../../bower_dependencies/vendor/angular-breadcrumb/dist/angular-breadcrumb',
+                        'angular-resource': '../../../../bower_dependencies/vendor/angular-resource/angular-resource',
+                        'angular-cookies': '../../../../bower_dependencies/vendor/angular-cookies/angular-cookies',
+                        'angular-promise-tracker': '../../../../bower_dependencies/vendor/angular-promise-tracker/promise-tracker',
+                        'angular-translate': '../../../../bower_dependencies/vendor/angular-translate/angular-translate',
+                        'angular-translate-storage-cookie': '../../../../bower_dependencies/vendor/angular-translate-storage-cookie/angular-translate-storage-cookie',
+                        'text': '../../../../bower_dependencies/vendor/requirejs-text/text',
+                        'underscore': '../../../../bower_dependencies/vendor/underscore/underscore',
+                        'moment': '../../../../bower_dependencies/vendor/moment/moment',
+                        'has': '../../../../bower_dependencies/vendor/has/has',
+                        'holderjs': '../../../../bower_dependencies/vendor/holderjs/holder',
+                        'marked': '../../../../bower_dependencies/vendor/marked/lib/marked'
                     },
                     mainConfigFile: 'src/main/app/scripts/main.js',
                     optimize: "uglify2",
@@ -153,8 +176,8 @@ module.exports = function (grunt) {
                         mangle: true
                     },
                     optimizeAllPluginResources: false,
-                    generateSourceMaps: false,
-                    preserveLicenseComments: true
+                    generateSourceMaps: true,
+                    preserveLicenseComments: false
                 }
             }
         },
@@ -170,17 +193,17 @@ module.exports = function (grunt) {
             debugserver: {
                 options: {
                     port: 8001,
-                    base: ['bower_dependencies','src/main/app','src/main/content'],
+                    base: ['bower_dependencies', 'src/main/app', 'src/main/content'],
                     directory: 'src/main/app',
-                    debug:true,
-                    keepalive:true
+                    debug: true,
+                    keepalive: true
                 }
             },
             devserver: {
                 options: {
                     port: 8001,
                     hostname: '*',
-                    base: ['bower_dependencies','src/main/app','src/main/content'],
+                    base: ['bower_dependencies', 'src/main/app', 'src/main/content'],
                     directory: 'src/main/app',
                     livereload: true
                 }
@@ -209,9 +232,16 @@ module.exports = function (grunt) {
                 background: true
             }
         },
-        "jsbeautifier" : {
-            files : ["src/main/app/**/*.js","src/main/app/**/*.html"],
-            options : {
+        "jsbeautifier": {
+            files: ["src/main/app/**/*.js", "src/main/app/**/*.html"],
+            options: {}
+        },
+        shell: {
+            buildModel: {
+                options: {
+                    stdout: true
+                },
+                command: './generateModel'
             }
         }
     });
@@ -230,6 +260,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks("grunt-jsbeautifier");
+    grunt.loadNpmTasks('grunt-shell');
 
     // CSS distribution task.
     grunt.registerTask('dist-css', ['less']);
@@ -241,15 +272,15 @@ module.exports = function (grunt) {
     grunt.registerTask('dist-sed', ['sed']);
 
     // Full distribution task.
-    grunt.registerTask('dist', ['clean', 'dist-css', 'dist-content', 'dist-js', 'dist-sed']);
+    grunt.registerTask('dist', ['clean', 'shell:buildModel', 'dist-css', 'dist-content', 'dist-js', 'dist-sed']);
 
     // Default task.
-    grunt.registerTask('default', [ 'clean', 'dist']);
-    grunt.registerTask('dev_watch_mode', [ 'karma:unit_watch','watch']);
+    grunt.registerTask('default', ['clean', 'dist']);
+    grunt.registerTask('dev_watch_mode', ['karma:unit_watch', 'watch']);
 
 
-    grunt.registerTask('dev', [ 'copy:fonts_dev', 'connect:devserver', 'less:theme_dev', 'less:bootstrap_dev', 'dev_watch_mode']);
-    grunt.registerTask('bin', [ 'dist', 'connect:binserver', 'watch']);
+    grunt.registerTask('dev', ['shell:buildModel', 'copy:fonts_dev', 'connect:devserver', 'less:theme_dev', 'less:bootstrap_dev', 'dev_watch_mode']);
+    grunt.registerTask('bin', ['dist', 'connect:binserver', 'watch']);
 
 
 };

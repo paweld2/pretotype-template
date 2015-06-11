@@ -19,6 +19,7 @@
         "grunt-contrib-requirejs": "~0.4.4",
         "grunt-notify": "0.4.1",
         "grunt-sed": "~0.1.1",
+        "grunt-shell": "~1.1.2",
         "grunt-contrib-less": "~1.0.0",
         "grunt-karma": "~0.10.1",
         "grunt-jsbeautifier": "~0.2.10",
