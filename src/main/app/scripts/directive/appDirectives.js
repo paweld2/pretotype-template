@@ -4,9 +4,7 @@ define(
         'directive/forms/niFocusOn',
         'directive/forms/niSubmit',
         'directive/forms/niField',
-        'directive/forms/niPasswordMatch',
         'directive/partials/appPartialDirectives',
-        'directive/cookies/cookiesEUDirective',
         'directive/holderJs',
         'directive/marked'
     ],
