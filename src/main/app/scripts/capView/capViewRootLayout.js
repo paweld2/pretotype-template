@@ -29,15 +29,11 @@ define(
                 },
                 data: {
                     access: accessLevels.public
-                },
-                ncyBreadcrumb: {
-                    label: 'Pulpit'
                 }
             }]
         };
         return {
             rootState: rootApp,
-            ncyBreadcrumbParent: 'root.app',
             capViews: [
                 rootApp
             ],
