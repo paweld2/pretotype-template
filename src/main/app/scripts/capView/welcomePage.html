@@ -1,45 +1,24 @@
 <div class="col-md-12">
     <div class="page-header">
-        <h1>Powoływać
-      <small>zarządzanie powołań.</small>
-    </h1>
+        <h1>Init</h1>
     </div>
     <div>
-        <div ng-if="principal.isInRole('admin')" class="col-md-6">
-            <a ui-sref="root.users.init" class="thumbnail">
-                <img holder-js data-src="holder.js/240x180/sky/text:Użytkownicy">
-
+        <div class="col-md-6">
+            <a ui-sref="root.test1" class="thumbnail">
+                <img holder-js data-src="holder.js/240x180/sky/text:Test 1">
                 <div class="text-center caption">
-                    <h3>Użytkownicy</h3>
+                    <h3>Test 1</h3>
                 </div>
             </a>
         </div>
         <div class="col-md-6">
-            <a ui-sref="root.students.init" class="thumbnail">
-                <img holder-js data-src="holder.js/240x180/sky/text:Uczniowie">
+            <a ui-sref="root.test2" class="thumbnail">
+                <img holder-js data-src="holder.js/240x180/sky/text:Test 2">
 
                 <div class="text-center caption">
-                    <h3>Uczniowie</h3>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-6">
-            <a ui-sref="root.appointment" class="thumbnail">
-                <img holder-js data-src="holder.js/240x180/sky/text:Powołania">
-
-                <div class="text-center caption">
-                    <h3>Powołania</h3>
-                </div>
-            </a>
-        </div>
-        <div ng-if="auth.isAdmin" class="col-md-6">
-            <a ui-sref="root.administration.init" class="thumbnail">
-                <img holder-js data-src="holder.js/240x180/sky/text:Zarządzanie">
-                <div class="text-center caption">
-                    <h3>Zarządzanie</h3>
+                    <h3>Test 2</h3>
                 </div>
             </a>
         </div>
     </div>
-
 </div>
